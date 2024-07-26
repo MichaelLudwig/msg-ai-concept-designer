@@ -30,13 +30,13 @@ def insert_chapter_at_placeholder(doc, placeholder, chapter):
             # Entferne den Platzhalter-Text
             paragraph.text = paragraph.text.replace(placeholder, '')
 
-# Bestehendes Dokument öffnen
-document = Document('IT-Konzept Template.docx')
 
 
 
 def export_dokument_to_word (new_title,new_header,toc_list, content):
-    #---Plazhalter ersetzen------------------------------------------------------------------------------------
+    
+    # Bestehendes Dokument öffnen
+    document = Document('IT-Konzept Template.docx')#---Plazhalter ersetzen------------------------------------------------------------------------------------
     replacements = {
         '{{Titel}}': new_header,
         '{{Titel2}}': "Pilotimplementierung KI Konzept Designer"
