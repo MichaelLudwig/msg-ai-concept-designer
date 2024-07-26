@@ -3,7 +3,7 @@ import pandas as pd
 from openai import OpenAI
 import json
 
-OpenAI.api_key = open('API_KEY', 'r').read() = st.secrets["OPENAI_API_KEY"]
+OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
 
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, new_context):
     client = OpenAI()
