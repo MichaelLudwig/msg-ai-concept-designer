@@ -109,8 +109,7 @@ st.sidebar.title("App-Steuerung")
 
 #Schaltflächen für neues Dokument
 st.sidebar.subheader("Neues Dokument", divider='grey')
-exp_newdoc = st.sidebar.expander("Neues Dokument")
-newdoc_form = exp_newdoc.form("newdoc_form_key")
+newdoc_form = st.sidebar.form("newdoc_form_key")
 newdoc_form.subheader("Neues Dokument erstellen")
 new_title = newdoc_form.text_input("Dokumenttitel")
 new_doctype = newdoc_form.selectbox("Dokumenttyp",
