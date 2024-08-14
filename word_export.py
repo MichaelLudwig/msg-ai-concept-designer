@@ -65,7 +65,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
                 if line.startswith("- **"):
                     # Wenn eine Aufzählung gefunden wird
                     point = line.replace("- **", "").replace("**", "").strip()
-                    chapter_content.append({"text": point, "style": "List Bullet 2"})
+                    chapter_content.append({"text": point, "style": "List Bullet 3"})
                 else:
                     line = line.replace("**", "").strip()
                     chapter_content.append({"text": line, "style": "Normal"})
@@ -85,7 +85,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
                 if line.startswith("- **"):
                     # Wenn eine Aufzählung gefunden wird
                     point = line.replace("- **", "").replace("**", "").strip()
-                    chapter_content.append({"text": point, "style": "List Bullet 2"})
+                    chapter_content.append({"text": point, "style": "List Bullet"})
                 else:
                     line = line.replace("**", "").strip()
                     chapter_content.append({"text": line, "style": "Normal"})
