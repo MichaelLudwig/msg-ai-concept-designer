@@ -70,7 +70,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
 
     # Save the document to a BytesIO object
     buffer = BytesIO()
-    doc.save(buffer)
+    document.save(buffer)
     buffer.seek(0)
     return buffer
 
