@@ -185,7 +185,7 @@ for i, item in enumerate(toc_list):
 
 if 'glossar' in st.session_state:
     st.header("Glossar")
-    st.print(st.session_state.glossar)
+    st.write(st.session_state.glossar)
 
 
 #st.write(st.session_state)
