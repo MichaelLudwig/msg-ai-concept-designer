@@ -113,9 +113,6 @@ exp_newdoc = st.sidebar.expander("Neues Dokument")
 newdoc_form = exp_newdoc.form("newdoc_form_key")
 newdoc_form.subheader("Neues Dokument erstellen")
 new_title = newdoc_form.text_input("Dokumenttitel")
-new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
-new_context = newdoc_form.text_area("Kontext")
-new_stakeholder = newdoc_form.text_input("Zielgruppe", value="Technisches Fachpersonal")
 new_doctype = newdoc_form.selectbox("Wähle einen Dokumenttyp",
     ["Anforderungskonzept", "Fachkonzept", "IT-Konzept", 
     "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
@@ -125,6 +122,9 @@ new_doctype = newdoc_form.selectbox("Wähle einen Dokumenttyp",
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
     "Schulungskonzept", "Kommunikationskonzetpt", "Benutzerhandbuch"])
+new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
+new_context = newdoc_form.text_area("Kontext")
+new_stakeholder = newdoc_form.text_input("Zielgruppe", value="Technisches Fachpersonal")
 new_writing_style = newdoc_form.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
 if new_writing_style == "msg Konzept":
     new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."
