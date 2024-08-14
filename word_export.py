@@ -54,7 +54,18 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
         chapter_content.append({"text": title_text, "style": "Heading 1"})
         chapter_content.append({"text": "Hinweis", "style": "Hinweistext"})
         chapter_content.append({"text": help_text, "style": "Hinweistext"})
-        chapter_content.append({"text": content[i], "style": "Normal"})
+        
+        lines = content[i].splitlines()
+        for line in lines:
+            if line.startswith("####"):
+                # Wenn eine neue Überschrift 2 gefunden wird
+                title_text = line.replace("####", "").strip()
+                chapter_content.append({"text": line, "style": "Heading 2"})
+            else:
+                # Normalen Inhalt hinzufügen
+                chapter_content.append({"text": line, "style": "Normal"})
+        
+        #chapter_content.append({"text": content[i], "style": "Normal"})
 
     #Glossar ergänzen
     if glossar:
