@@ -2,7 +2,10 @@ import streamlit as st
 import pandas as pd
 from openai import OpenAI
 import json
+
+#Dokumentenexport Requirements
 from docx import Document
+from io import BytesIO
 #import word_export
 
 
