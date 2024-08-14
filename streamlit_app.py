@@ -186,7 +186,7 @@ for i, item in enumerate(toc_list):
         
 
 # Bestehendes Dokument öffnen
-document = Document('IT-Konzept Template.docx')
+# document = Document('IT-Konzept Template.docx')
 
 #st.write(st.session_state)
 
