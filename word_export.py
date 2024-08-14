@@ -67,6 +67,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
                     point = line.replace("- **", "").replace("**", "").strip()
                     chapter_content.append({"text": point, "style": "List Bullet"})
                 else:
+                    line = line.replace("**", "").strip()
                     chapter_content.append({"text": line, "style": "Normal"})
         
         #chapter_content.append({"text": content[i], "style": "Normal"})
