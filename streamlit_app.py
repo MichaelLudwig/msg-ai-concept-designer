@@ -76,7 +76,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
             {"role":"user" , "content": prompt_text},
             {"role":"user" , "content": "Der Artikel sollte im folgenden Stil geschreiben sein: " + new_writing_style},
             {"role":"user" , "content": "Der Artikel soll maximal " + str(new_word_count) + " Worte beinhalten."},
-            {"role":"user" , "content": "Starte jedes Unterkapitel mit dem Präfix ####. Nenne nicht noch einmal den Kapitelnamen zu Begin sondern beginne direkt mit dem Inhalt."},
+            {"role":"user" , "content": "Starte jedes Unterkapitel mit dem Präfix #### und verzichte dabei auf Nummerierungen. Nenne nicht noch einmal den Kapitelnamen zu Begin sondern beginne direkt mit dem Inhalt."},
         ]
     )
     result = ''
