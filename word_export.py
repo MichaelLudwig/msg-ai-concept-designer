@@ -72,11 +72,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
     buffer = BytesIO()
     document.save(buffer)
     buffer.seek(0)
-    return buffer
-
-if st.sidebar.button("Download Word Template"):
-    word_file = create_word_document()
-    
+    word_file = buffer
     # Provide the file as a download
     st.sidebar.download_button(
         label="Download Word file",
@@ -84,6 +80,9 @@ if st.sidebar.button("Download Word Template"):
         file_name="Konzept.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
+    return buffer
+
+
 
     
     # Geändertes Dokument speichern
