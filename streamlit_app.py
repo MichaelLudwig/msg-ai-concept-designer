@@ -156,9 +156,9 @@ if new_submitted:
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
         glossar = generate_glossar(st.session_state.kapitel_inhalt)
         #st.write(glossar)
-        st.session_state.toc_list(len(toc_list)+1)["title"] = "Glossar"
-        st.session_state.toc_list(len(toc_list)+1)["help_text"] = ""
-        st.session_state.toc_list(len(toc_list)+1)["prompt_text"] = ""
+        st.session_state.toc_list[len(toc_list)+1]["title"] = "Glossar"
+        st.session_state.toc_list[len(toc_list)+1]["help_text"] = ""
+        st.session_state.toc_list[len(toc_list)+1]["prompt_text"] = ""
         st.session_state.kapitel_inhalt[len(toc_list)+1] = glossar
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt)
 
