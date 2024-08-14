@@ -91,7 +91,7 @@ def generate_glossar(content):
         model = "gpt-4o-mini",
         messages=[
             {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
-            {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar in form einer Tabelle. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
+            {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
         ]
     )
     result = ''
@@ -157,7 +157,8 @@ if new_submitted:
     
         
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
-        st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
+        if 'glossar' not in st.session_state:
+            st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
