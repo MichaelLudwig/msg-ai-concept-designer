@@ -16,6 +16,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, n
             {"role": "system", "content": "Du bist ein Assistent, der Inhaltsverzeichnisse mit einer kurzen Beschreibung pro Kapitel für bestimmte Themengebiete erstellt"},
             {"role":"user" , "content": "Erstelle ein durchnummeriertes Inhaltsverzeichnis für ein " + new_doctype + " zum Thema " + new_title + " mit etwa " + str(new_chapter_count) + " Kapiteln."},
             {"role":"user" , "content": "Der inhaltliche Schwerpunkt sollte auf folgende Punkte gesetzt werden: " + new_content_focus},
+            {"role":"user" , "content": "Folgender Kontext ist zu beachten: " + new_context},
             {"role": "user", "content": "Erstelle zu jedem Kapitel einen Hilfetext mit etwa 50 Wörtern. Beschreibe hier, welche Inhalte in das Kapitel eingearbeitet werden müssen und worauf insbesondere zu achten ist."},
             {"role": "user", "content": "Die Hilfetexte sollen dem IT Berater dabei helfen, das jeweilige Kapitel professionel auszuarbeiten und alle wichtigen Rahmenbedingungen wie Thema und Schwerpunkte zu beachten."},
             {"role": "user", "content": "Neben dem Hilfetext erstelle für jedes Kapitel einen Prompt, mit dem chatgpt den passenden Inhalt für dieses Kapitel erzeugen kann."},
@@ -72,6 +73,8 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
         messages=[
             {"role":"user" , "content": "Du schreibst mehrere Kapitel eines " + new_doctype + " zum Thema " + new_title },
             {"role":"user" , "content": "Schreibe den Inhalt für das Kapitel" + title_text},
+            {"role":"user" , "content": "Beachte auch hier den folgenden Kontext, wenn er für dieses Kapitel relevant ist: " + new_context},
+            {"role":"user" , "content": "Das Kapitel ist für folgende Zielgruppe zu schreiben. " + new_stakeholder + " Passe den technischen Detailierungsgrad dieser Zielgruppe an."},
             {"role":"user" , "content": prompt_text},
             {"role":"user" , "content": "Der Artikel sollte im folgenden Stil geschreiben sein: " + new_writing_style},
             {"role":"user" , "content": "Der Artikel soll maximal " + str(new_word_count) + " Worte beinhalten."},
@@ -112,6 +115,8 @@ newdoc_form = exp_newdoc.form("newdoc_form_key")
 newdoc_form.subheader("Neues Dokument erstellen")
 new_title = newdoc_form.text_input("Dokumenttitel")
 new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
+new_context = newdoc_form.text_area("Kontext")
+new_stakeholder = newdoc_form.text_input("Zielgruppe", value="Technisches Fachpersonal")
 new_doctype = newdoc_form.selectbox("Wähle einen Dokumenttyp",
     ["Anforderungskonzept", "Fachkonzept", "IT-Konzept", 
     "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
