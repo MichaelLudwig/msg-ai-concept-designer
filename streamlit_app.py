@@ -121,7 +121,7 @@ new_doctype = newdoc_form.selectbox("Wähle einen Dokumenttyp",
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
     "Schulungskonzept", "Kommunikationskonzetpt", "Benutzerhandbuch"])
-new_writing_style = newdoc_form.selectbox("Wähle den Schreibstil.", ["test", "msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
+new_writing_style = newdoc_form.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
 if new_writing_style == "msg Konzept":
     new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=20, value=8)
