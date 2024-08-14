@@ -113,7 +113,7 @@ exp_newdoc = st.sidebar.expander("Neues Dokument")
 newdoc_form = exp_newdoc.form("newdoc_form_key")
 newdoc_form.subheader("Neues Dokument erstellen")
 new_title = newdoc_form.text_input("Dokumenttitel")
-new_doctype = newdoc_form.selectbox("Wähle einen Dokumenttyp",
+new_doctype = newdoc_form.selectbox("Dokumenttyp",
     ["Anforderungskonzept", "Fachkonzept", "IT-Konzept", 
     "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
     "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
