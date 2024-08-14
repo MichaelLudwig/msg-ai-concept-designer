@@ -154,8 +154,8 @@ if new_submitted:
     st.session_state.prompt_area = [""] * len(toc_list)
         
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
-        #glossar = generate_glossar(st.session_state.kapitel_inhalt)
-        #st.write(glossar)
+        glossar = generate_glossar(st.session_state.kapitel_inhalt)
+        st.write(glossar)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt)
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
