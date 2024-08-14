@@ -152,14 +152,10 @@ if new_submitted:
     st.session_state.kapitel_inhalt = [""] * len(toc_list)
     st.session_state.kapitel_prompt = [""] * len(toc_list)
     st.session_state.prompt_area = [""] * len(toc_list)
+    glossar = ""
         
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
         glossar = generate_glossar(st.session_state.kapitel_inhalt)
-        #st.write(glossar)
-        st.session_state.toc_list[len(toc_list)+1]["title"] = "Glossar"
-        st.session_state.toc_list[len(toc_list)+1]["help_text"] = ""
-        st.session_state.toc_list[len(toc_list)+1]["prompt_text"] = ""
-        st.session_state.kapitel_inhalt[len(toc_list)+1] = glossar
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt)
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
@@ -182,9 +178,12 @@ for i, item in enumerate(toc_list):
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
         prompt_text = st.session_state.prompt_area[i]
         generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, i)
-        
-        
+               
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
+
+if glossar != "":
+    st.header("Glossar")
+    st.print(glossar)
 
 
 #st.write(st.session_state)
