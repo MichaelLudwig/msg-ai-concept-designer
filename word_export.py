@@ -79,7 +79,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
         for line in lines:
             if line.startswith("### ") or line.startswith("#### "):
                 # Wenn eine neue Überschrift 2 gefunden wird
-                heading = line.replace("### ", "").replace("#### ", "").strip()
+                heading = line.replace("#### ", "").replace("### ", "").strip()
                 chapter_content.append({"text": heading, "style": "Header"})
             else:
                 if line.startswith("- **"):
