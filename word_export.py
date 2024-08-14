@@ -1,6 +1,8 @@
-from docx import Document
-from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 import streamlit as st
+from docx import Document
+from io import BytesIO
+#from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+
 
 
 
@@ -52,7 +54,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
     for i, item in enumerate(toc_list):
         title_text = item["title"]
         help_text= item["help_text"]
-        chapter_content.append({"text": title_text, "style": "Heading 1", "alignment": WD_PARAGRAPH_ALIGNMENT.LEFT})
+        chapter_content.append({"text": title_text, "style": "Heading 1"})
         chapter_content.append({"text": "Hinweis", "style": "Hinweistext"})
         chapter_content.append({"text": help_text, "style": "Hinweistext"})
         chapter_content.append({"text": content[i], "style": "Normal"})
@@ -66,7 +68,25 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
     for chapter in chapters:
         insert_chapter_at_placeholder(document, chapter['placeholder'], chapter['content'])
 
-    # Geändertes Dokument speichern
-    document.save('IT-Konzept Test 01.docx')
+    # Save the document to a BytesIO object
+    buffer = BytesIO()
+    doc.save(buffer)
+    buffer.seek(0)
+    return buffer
 
-    print("Das Dokument wurde erfolgreich aktualisiert.")
+if st.sidebar.button("Download Word Template"):
+    word_file = create_word_document()
+    
+    # Provide the file as a download
+    st.sidebar.download_button(
+        label="Download Word file",
+        data=word_file,
+        file_name="Konzept.docx",
+        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    )
+
+    
+    # Geändertes Dokument speichern
+    #document.save('IT-Konzept Test 01.docx')
+
+    #print("Das Dokument wurde erfolgreich aktualisiert.")
