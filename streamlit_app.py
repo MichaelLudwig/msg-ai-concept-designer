@@ -145,7 +145,7 @@ if new_writing_style == "msg Konzept":
     new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."        
 
 st.sidebar.subheader("Word Export", divider='grey')
-if st.sidebar.button("Word Dokument exportieren", key="word_export"):
+if st.sidebar.button("Word Dokument generieren", key="word_export"):
         if 'glossar' not in st.session_state:
             st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
