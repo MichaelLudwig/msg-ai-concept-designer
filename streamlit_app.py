@@ -16,7 +16,6 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, n
             {"role": "system", "content": "Du bist ein Assistent, der Inhaltsverzeichnisse mit einer kurzen Beschreibung pro Kapitel für bestimmte Themengebiete erstellt"},
             {"role":"user" , "content": "Erstelle ein durchnummeriertes Inhaltsverzeichnis für ein " + new_doctype + " zum Thema " + new_title + " mit etwa " + str(new_chapter_count) + " Kapiteln."},
             {"role":"user" , "content": "Der inhaltliche Schwerpunkt sollte auf folgende Punkte gesetzt werden: " + new_content_focus},
-            {"role":"user" , "content": "Folgender Kontext ist zu beachten: " + new_context},
             {"role": "user", "content": "Erstelle zu jedem Kapitel einen Hilfetext mit etwa 50 Wörtern. Beschreibe hier, welche Inhalte in das Kapitel eingearbeitet werden müssen und worauf insbesondere zu achten ist."},
             {"role": "user", "content": "Die Hilfetexte sollen dem IT Berater dabei helfen, das jeweilige Kapitel professionel auszuarbeiten und alle wichtigen Rahmenbedingungen wie Thema und Schwerpunkte zu beachten."},
             {"role": "user", "content": "Neben dem Hilfetext erstelle für jedes Kapitel einen Prompt, mit dem chatgpt den passenden Inhalt für dieses Kapitel erzeugen kann."},
@@ -124,13 +123,9 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
     "Schulungskonzept", "Kommunikationskonzetpt", "Benutzerhandbuch"])
 new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
-new_context = newdoc_form.text_area("Kontext")
-new_stakeholder = newdoc_form.text_input("Zielgruppe", value="Technisches Fachpersonal")
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=20, value=8)
 
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
-if new_doctype in ["IT Konzept", "Fachkonzept"]:
-    new_context += "Das erste Kapitel ist die Managementsummary. Danach fürge die weiteren Kapitel hinzu."
 
 if 'toc_list' in st.session_state:
     toc_list=st.session_state.toc_list
@@ -143,6 +138,9 @@ new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=
 new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
 if new_writing_style == "msg Konzept":
     new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."        
+new_context = st.sidebar.text_area("Kontext")
+new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachpersonal")
+
 
 st.sidebar.subheader("Word Export", divider='grey')
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
