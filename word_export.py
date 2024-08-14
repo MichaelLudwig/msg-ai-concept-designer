@@ -77,5 +77,5 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
         file_name="Konzept.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
-    return buffer
+    
 
