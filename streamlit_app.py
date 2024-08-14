@@ -158,7 +158,7 @@ if new_submitted:
         
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
         st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
-        word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt)
+        word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
 # Erstellen der Struktur mit Überschriften Infoboxen und Textboxen

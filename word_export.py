@@ -32,7 +32,7 @@ def insert_chapter_at_placeholder(doc, placeholder, chapter):
 
 
 
-def export_dokument_to_word (new_title,new_header,toc_list, content):
+def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
     
     # Bestehendes Dokument öffnen
     document = Document('IT-Konzept Template.docx')#---Plazhalter ersetzen------------------------------------------------------------------------------------
@@ -55,6 +55,11 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
         chapter_content.append({"text": "Hinweis", "style": "Hinweistext"})
         chapter_content.append({"text": help_text, "style": "Hinweistext"})
         chapter_content.append({"text": content[i], "style": "Normal"})
+
+    #Glossar ergänzen
+    if glossar:
+        chapter_content.append({"text": "Glossar", "style": "Heading 1"})
+        chapter_content.append({"text": glossar, "style": "Normal"})
 
     chapters = [
         {
