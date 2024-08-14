@@ -129,8 +129,8 @@ new_writing_style = newdoc_form.selectbox("Wähle den Schreibstil.", ["msg Konze
 if new_writing_style == "msg Konzept":
     new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=20, value=8)
-new_word_count = newdoc_form.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=500, value=100, step=50)
-new_submitted = newdoc_form.form_submit_button("Dokument erstellen")
+
+new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 if new_doctype in ["IT Konzept", "Fachkonzept"]:
     new_context += "Das erste Kapitel ist die Managementsummary. Danach fürge die weiteren Kapitel hinzu."
 
@@ -140,8 +140,10 @@ else:
     toc_list=[]
 
 
-
+# Konzeptinhaltsverzeichnis aus gegebenen Parametern per ChatBot erstellen lassen
 if new_submitted:
+    
+    #Inhaltsbereich generieren  
     main_title=st.header(new_doctype + ": " + new_title, divider='blue')
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
@@ -154,8 +156,9 @@ if new_submitted:
     st.session_state.kapitel_inhalt = [""] * len(toc_list)
     st.session_state.kapitel_prompt = [""] * len(toc_list)
     st.session_state.prompt_area = [""] * len(toc_list)
-    
-        
+
+#Sidebar erweitern    
+new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=500, value=100, step=50)        
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
         if 'glossar' not in st.session_state:
             st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
