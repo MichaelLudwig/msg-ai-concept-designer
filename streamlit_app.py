@@ -20,7 +20,6 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, n
             {"role": "user", "content": "Erstelle zu jedem Kapitel einen Hilfetext mit etwa 50 Wörtern. Beschreibe hier, welche Inhalte in das Kapitel eingearbeitet werden müssen und worauf insbesondere zu achten ist."},
             {"role": "user", "content": "Die Hilfetexte sollen dem IT Berater dabei helfen, das jeweilige Kapitel professionel auszuarbeiten und alle wichtigen Rahmenbedingungen wie Thema und Schwerpunkte zu beachten."},
             {"role": "user", "content": "Neben dem Hilfetext erstelle für jedes Kapitel einen Prompt, mit dem chatgpt den passenden Inhalt für dieses Kapitel erzeugen kann."},
-            {"role": "user", "content": new_context},
         ],
         functions=[
             {
@@ -73,7 +72,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
         messages=[
             {"role":"user" , "content": "Du schreibst mehrere Kapitel eines " + new_doctype + " zum Thema " + new_title },
             {"role":"user" , "content": "Schreibe den Inhalt für das Kapitel" + title_text},
-            {"role":"user" , "content": "Beachte auch hier den folgenden Kontext, wenn er für dieses Kapitel relevant ist: " + new_context},
+            {"role":"user" , "content": "Beachte den folgenden Kontext und gehe inhaltlich üassend zum Kapitel darauf ein: " + new_context},
             {"role":"user" , "content": "Das Kapitel ist für folgende Zielgruppe zu schreiben. " + new_stakeholder + " Passe den technischen Detailierungsgrad dieser Zielgruppe an."},
             {"role":"user" , "content": prompt_text},
             {"role":"user" , "content": "Der Artikel sollte im folgenden Stil geschreiben sein: " + new_writing_style},
@@ -132,7 +131,6 @@ if new_writing_style == "msg Konzept":
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=20, value=8)
 new_word_count = newdoc_form.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=500, value=100, step=50)
 new_submitted = newdoc_form.form_submit_button("Dokument erstellen")
-new_context = ""
 if new_doctype in ["IT Konzept", "Fachkonzept"]:
     new_context += "Das erste Kapitel ist die Managementsummary. Danach fürge die weiteren Kapitel hinzu."
 
