@@ -191,7 +191,7 @@ for i, item in enumerate(toc_list):
 # Bestehendes Dokument öffnen
 def create_word_document():
     doc = Document('IT-Konzept Template.docx')
-    doc.add_heading('Title', 0)
+    doc.add_heading('Heading 1', 0)
     doc.add_paragraph('This is an example Word document created with python-docx.')
     
     # Save the document to a BytesIO object
