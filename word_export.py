@@ -62,8 +62,13 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
                 heading = line.replace("#### ", "").strip()
                 chapter_content.append({"text": heading, "style": "Heading 2"})
             else:
-                line = line.replace("**", "").strip()
-                chapter_content.append({"text": line, "style": "Normal"})
+                if line.startswith("- **"):
+                    # Wenn eine Aufzählung gefunden wird
+                    point = line.replace("- **", "").replace("**", "").strip()
+                    chapter_content.append({"text": point, "style": "Aufzählungszeichen"})
+                else:
+                    line = line.replace("**", "").strip()
+                    chapter_content.append({"text": line, "style": "Normal"})
         
         #chapter_content.append({"text": content[i], "style": "Normal"})
 
