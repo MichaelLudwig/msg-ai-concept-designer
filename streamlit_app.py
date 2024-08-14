@@ -139,6 +139,8 @@ if 'toc_list' in st.session_state:
 else:
     toc_list=[]
 
+
+
 if new_submitted:
     main_title=st.header(new_doctype + ": " + new_title, divider='blue')
     st.session_state.new_title = new_title
@@ -152,7 +154,7 @@ if new_submitted:
     st.session_state.kapitel_inhalt = [""] * len(toc_list)
     st.session_state.kapitel_prompt = [""] * len(toc_list)
     st.session_state.prompt_area = [""] * len(toc_list)
-    st.session_state.glossar = ""
+    
         
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
         st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
@@ -181,7 +183,7 @@ for i, item in enumerate(toc_list):
                
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
 
-if st.session_state.glossar:
+if 'glossar' in st.session_state:
     st.header("Glossar")
     st.print(st.session_state.glossar)
 
