@@ -1,9 +1,6 @@
 import streamlit as st
 from docx import Document
 from io import BytesIO
-#from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
-
-
 
 
 def replace_placeholder(doc, placeholder, replacement):
@@ -75,17 +72,10 @@ def export_dokument_to_word (new_title,new_header,toc_list, content):
     word_file = buffer
     # Provide the file as a download
     st.sidebar.download_button(
-        label="Download Word file",
+        label="Word Dokument herunterladen",
         data=word_file,
         file_name="Konzept.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
     return buffer
 
-
-
-    
-    # Geändertes Dokument speichern
-    #document.save('IT-Konzept Test 01.docx')
-
-    #print("Das Dokument wurde erfolgreich aktualisiert.")

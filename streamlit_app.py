@@ -2,10 +2,6 @@ import streamlit as st
 import pandas as pd
 from openai import OpenAI
 import json
-
-#Dokumentenexport Requirements
-#from docx import Document
-#from io import BytesIO
 import word_export
 
 
@@ -158,7 +154,6 @@ if new_submitted:
     st.session_state.prompt_area = [""] * len(toc_list)
         
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
-        st.sidebar.write("Word Export gestartet")
         #glossar = generate_glossar(st.session_state.kapitel_inhalt)
         #st.write(glossar)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt)
@@ -186,30 +181,7 @@ for i, item in enumerate(toc_list):
         
         
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
-        
 
-# Bestehendes Dokument öffnen
-#def create_word_document():
-#    doc = Document('IT-Konzept Template.docx')
-#    #doc.add_heading('Heading 1', 0)
-#    doc.add_paragraph('This is an example Word document created with python-docx.')
-#    
-    # Save the document to a BytesIO object
-#    buffer = BytesIO()
-#    doc.save(buffer)
-#    buffer.seek(0)
-#    return buffer
-
-#if st.sidebar.button("Download Word Template"):
-#    word_file = create_word_document()
-    
-    # Provide the file as a download
-#    st.sidebar.download_button(
-#        label="Download Word file",
-#        data=word_file,
-#        file_name="Konzept.docx",
-#        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-#    )
 
 #st.write(st.session_state)
 
