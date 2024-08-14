@@ -139,6 +139,12 @@ if 'toc_list' in st.session_state:
 else:
     toc_list=[]
 
+#Sidebar Steuerelemente    
+new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=500, value=100, step=50)        
+if st.sidebar.button("Word Dokument generieren", key="word_export"):
+        if 'glossar' not in st.session_state:
+            st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
+        word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
 # Konzeptinhaltsverzeichnis aus gegebenen Parametern per ChatBot erstellen lassen
 if new_submitted:
@@ -157,12 +163,7 @@ if new_submitted:
     st.session_state.kapitel_prompt = [""] * len(toc_list)
     st.session_state.prompt_area = [""] * len(toc_list)
 
-#Sidebar erweitern    
-new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=500, value=100, step=50)        
-if st.sidebar.button("Word Dokument generieren", key="word_export"):
-        if 'glossar' not in st.session_state:
-            st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
-        word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
+
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
 # Erstellen der Struktur mit Überschriften Infoboxen und Textboxen
