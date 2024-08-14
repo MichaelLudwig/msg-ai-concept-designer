@@ -137,7 +137,7 @@ else:
     toc_list=[]
 
 #Sidebar Steuerelemente 
-st.sidebar.subheader("Kapitel Steuerelemente")   
+st.sidebar.subheader("Kapitel Steuerelemente", divider='grey')   
 new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=500, value=100, step=50)
 new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
 if new_writing_style == "msg Konzept":
