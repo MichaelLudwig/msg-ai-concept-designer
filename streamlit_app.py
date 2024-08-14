@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from openai import OpenAI
 import json
+from docx import Document
 #import word_export
 
 
@@ -183,6 +184,9 @@ for i, item in enumerate(toc_list):
         
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
         
-        
+
+# Bestehendes Dokument öffnen
+document = Document('IT-Konzept Template.docx')
+
 #st.write(st.session_state)
 
