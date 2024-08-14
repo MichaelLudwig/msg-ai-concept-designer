@@ -143,10 +143,11 @@ new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachper
 
 
 st.sidebar.subheader("Word Export", divider='grey')
+if st.sidebar.button("Glossar (re)generieren", key="glossar"):
+    st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
+
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
-        if 'glossar' not in st.session_state:
-            st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
-        word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
+    word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
 # Konzeptinhaltsverzeichnis aus gegebenen Parametern per ChatBot erstellen lassen
 if new_submitted:
