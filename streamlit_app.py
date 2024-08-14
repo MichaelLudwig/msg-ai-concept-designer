@@ -91,7 +91,7 @@ def generate_glossar(content):
         model = "gpt-4o-mini",
         messages=[
             {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
-            {"role":"user" , "content": "Erstelle ein Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
+            {"role":"user" , "content": "Erstelle ein alphabetisch sortiertes Glossar in form einer Tabelle. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
         ]
     )
     result = ''
