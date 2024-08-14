@@ -73,6 +73,7 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
         #chapter_content.append({"text": content[i], "style": "Normal"})
 
     #Glossar ergänzen
+    chapter_content.append({"text": "Glossar", "style": "Heading 1"})
     if glossar:
         lines = glossar.splitlines()
         for line in lines:
@@ -89,8 +90,6 @@ def export_dokument_to_word (new_title,new_header,toc_list, content, glossar):
                     line = line.replace("**", "").strip()
                     chapter_content.append({"text": line, "style": "Normal"})
         
-        chapter_content.append({"text": "Glossar", "style": "Heading 1"})
-        chapter_content.append({"text": glossar, "style": "Normal"})
 
     chapters = [
         {
