@@ -111,7 +111,6 @@ st.sidebar.title("App-Steuerung")
 #Schaltflächen für neues Dokument
 st.sidebar.subheader("Neues Dokument", divider='grey')
 newdoc_form = st.sidebar.form("newdoc_form_key")
-newdoc_form.subheader("Neues Dokument erstellen")
 new_title = newdoc_form.text_input("Dokumenttitel")
 new_doctype = newdoc_form.selectbox("Dokumenttyp",
     ["Marktanalyse", "Anforderungskonzept", "Fachkonzept", "IT-Konzept", 
@@ -123,7 +122,7 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
     "Schulungskonzept", "Kommunikationskonzetpt", "Benutzerhandbuch"])
 new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
-new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=20, value=8)
+new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
 
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 
