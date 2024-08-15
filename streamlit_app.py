@@ -5,12 +5,17 @@ import word_export
 
 main_heading=st.title("AI Concept Designer")
 
-#--Sidebar ---------------------------------------------------------------------------------------------------------------------------------------
+#--Sessionstat Handling ---------------------------------------------------------------------------------------------------------------------------------------
 if 'new_title' not in st.session_state:
     st.session_state.new_title = ""
 if 'new_header' not in st.session_state:
     st.session_state.new_header = ""
+if 'toc_list' in st.session_state:
+    toc_list=st.session_state.toc_list
+else:
+    toc_list=[]
 
+#--Sidebar ---------------------------------------------------------------------------------------------------------------------------------------
 st.sidebar.title("App-Steuerung")
 
 #Schaltflächen für neues Dokument
@@ -28,13 +33,8 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Schulungskonzept", "Kommunikationskonzetpt", "Benutzerhandbuch"])
 new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
-
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 
-if 'toc_list' in st.session_state:
-    toc_list=st.session_state.toc_list
-else:
-    toc_list=[]
 
 #Schaltflächen für die Kapitelbearbeitung 
 st.sidebar.subheader("Kapitel Steuerelemente", divider='grey')   
@@ -57,17 +57,22 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
             st.session_state.glossar = openAI_API.generate_glossar(st.session_state.kapitel_inhalt)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
+
+
+
+#--App Logik ---------------------------------------------------------------------------------------------------------------------------------------
 # Konzeptinhaltsverzeichnis aus gegebenen Parametern per ChatBot erstellen lassen
 if new_submitted:
     
-    #Inhaltsbereich generieren  
+    # Überschriften für Hauptbereich aus Parametern erzeugen
     st.header(new_doctype + ": " + new_title, divider='grey')    
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
-    
+    #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
     toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count)
-    #st.write(toc_list)
+    
+    #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
     st.session_state.toc_list = toc_list
     st.session_state.kapitel_info = [""] * len(toc_list)
     st.session_state.kapitel_inhalt = [""] * len(toc_list)
@@ -77,17 +82,22 @@ if new_submitted:
 
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
-# Erstellen der Struktur mit Überschriften Infoboxen und Textboxen
+# Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
 for i, item in enumerate(toc_list):
     title_text = item["title"]
     help_text= item["help_text"]
     prompt_text= item["prompt_text"]
 
+    #Inhalte aus generierten Kapitelverzeichnis in SessionState nachhalten damit sie beim reload erhalten bleiben
     st.session_state.kapitel_info[i] = help_text
     st.session_state.kapitel_prompt[i] = prompt_text
+
+    #Aufbau der Seitenkomponente für jedes Kapitel
     st.header(title_text)    
     st.info(help_text)
     st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
+    
+    #Schaltfläche um die Kapitelinhalte zu generieren
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
         prompt_text = st.session_state.prompt_area[i]
         openAI_API.generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
