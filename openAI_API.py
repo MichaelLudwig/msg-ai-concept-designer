@@ -1,15 +1,14 @@
 import streamlit as st
-import pandas as pd
 from openai import OpenAI
 import json
 
 OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
+openAI_model = "gpt-4o-mini"
 
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
     client = OpenAI()
     response = client.chat.completions.create(
-        #model="gpt-3.5-turbo",
-        model="gpt-4o-mini",
+        model=openAI_model,
         messages=[
             {"role": "system", "content": "Du bist ein Assistent, der Inhaltsverzeichnisse mit einer kurzen Beschreibung pro Kapitel für bestimmte Themengebiete erstellt"},
             {"role":"user" , "content": "Erstelle ein durchnummeriertes Inhaltsverzeichnis für ein " + new_doctype + " zum Thema " + new_title + " mit etwa " + str(new_chapter_count) + " Kapiteln."},
@@ -63,7 +62,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
 def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, index):
     client = OpenAI()
     response = client.chat.completions.create(
-        model = "gpt-4o-mini",
+        model = openAI_model,
         messages=[
             {"role":"user" , "content": "Du schreibst mehrere Kapitel eines " + new_doctype + " zum Thema " + new_title },
             {"role":"user" , "content": "Schreibe den Inhalt für das Kapitel" + title_text},
@@ -82,7 +81,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
 def generate_glossar(content):
     client = OpenAI()
     response = client.chat.completions.create(
-        model = "gpt-4o-mini",
+        model = openAI_model,
         messages=[
             {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
             {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
