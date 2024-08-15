@@ -6,22 +6,7 @@ import openAI_API
 import word_export
 
 
-OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
-
-
-
-def generate_glossar(content):
-    client = OpenAI()
-    response = client.chat.completions.create(
-        model = "gpt-4o-mini",
-        messages=[
-            {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
-            {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
-        ]
-    )
-
-    glossar = response.choices[0].message.content    
-    return glossar
+#OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
 
 main_heading=st.title("AI Concept Designer")
 
