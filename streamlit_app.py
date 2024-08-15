@@ -114,7 +114,7 @@ newdoc_form = st.sidebar.form("newdoc_form_key")
 newdoc_form.subheader("Neues Dokument erstellen")
 new_title = newdoc_form.text_input("Dokumenttitel")
 new_doctype = newdoc_form.selectbox("Dokumenttyp",
-    ["Anforderungskonzept", "Fachkonzept", "IT-Konzept", 
+    ["Marktanalyse", "Anforderungskonzept", "Fachkonzept", "IT-Konzept", 
     "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
     "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
     "Datenschutzkonzept", "Datenschutzerklärung", "Schutzbedarfsfeststellung (nach BSI Grundschutz)", "Auftragsverarbeitungs-Vertrag", "Verzeichnis von Verarbeitungstätigkeiten", "Datenschutzfolgeabschätzung",
