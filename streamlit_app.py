@@ -19,9 +19,9 @@ def generate_glossar(content):
             {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
         ]
     )
-    result = ''
-    result = response.choices[0].message.content    
-    return result
+
+    glossar = response.choices[0].message.content    
+    return glossar
 
 main_heading=st.title("AI Concept Designer")
 
@@ -70,11 +70,11 @@ new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachper
 st.sidebar.subheader("Word Export", divider='grey')
 
 if st.sidebar.button("Glossar (re)generieren", key="Glossar"):
-    st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
+    st.session_state.glossar = openAI_API.generate_glossar(st.session_state.kapitel_inhalt)
 
 if st.sidebar.button("Word Dokument generieren", key="word_export"):
         if 'glossar' not in st.session_state:
-            st.session_state.glossar = generate_glossar(st.session_state.kapitel_inhalt)
+            st.session_state.glossar = openAI_API.generate_glossar(st.session_state.kapitel_inhalt)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
 # Konzeptinhaltsverzeichnis aus gegebenen Parametern per ChatBot erstellen lassen

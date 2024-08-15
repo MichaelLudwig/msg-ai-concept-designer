@@ -78,3 +78,16 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
     chapter_content = response.choices[0].message.content
     st.session_state.kapitel_inhalt[index] = chapter_content
     return chapter_content
+
+def generate_glossar(content):
+    client = OpenAI()
+    response = client.chat.completions.create(
+        model = "gpt-4o-mini",
+        messages=[
+            {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
+            {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}            
+        ]
+    )
+
+    glossar = response.choices[0].message.content    
+    return glossar
