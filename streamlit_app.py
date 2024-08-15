@@ -140,25 +140,6 @@ if new_writing_style == "msg Konzept":
 new_context = st.sidebar.text_area("Kontext")
 new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachpersonal")
 
-#Schaltflächen für die Kapitelstruktur bearbeitung
-#newchapter_form = st.sidebar.form("newchapter_form_key")
-#newchapter_position = newchapter_form.slider("Position für neues Kapitel", min_value=1, max_value=len(toc_list), value=1)
-#newchapter_title = newchapter_form.text_input("Kaitel Überschrift")
-#newchapter_submitted = newchapter_form.form_submit_button("Kapitel einfügen")
-#if newchapter_submitted:
-#    toc_list.insert(newchapter_position, 
-#                    {
- #                       "title":newchapter_title,
-#                        "help_text":"",
- #                       "prompt_text":"",
- #                   }
- #                   )
- #   st.session_state.toc_list = toc_list
- #   st.session_state.kapitel_info.insert(newchapter_position, "")
- #   st.session_state.kapitel_prompt.insert(newchapter_position, "")
- #   st.session_state.prompt_area.insert(newchapter_position, "")
- #   st.session_state.kapitel_inhalt.insert(newchapter_position, "")
-
 
 #Schaltflächen für den Word Export
 st.sidebar.subheader("Word Export", divider='grey')
