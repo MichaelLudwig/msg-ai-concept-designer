@@ -8,7 +8,7 @@ import word_export
 
 OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
 
-def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, new_context):
+def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
     client = OpenAI()
     response = client.chat.completions.create(
         #model="gpt-3.5-turbo",
@@ -158,7 +158,7 @@ if new_submitted:
     st.session_state.new_header = new_doctype + ": " + new_title
 
     
-    toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, new_context)
+    toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count)
     #st.write(toc_list)
     st.session_state.toc_list = toc_list
     st.session_state.kapitel_info = [""] * len(toc_list)
