@@ -2,7 +2,7 @@ import streamlit as st
 import openAI_API
 import word_export
 
-
+st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
 
 #--Sessionstat Handling ---------------------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +101,8 @@ for i, item in enumerate(toc_list):
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
         prompt_text = st.session_state.prompt_area[i]
         openAI_API.generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
-               
+
+    #Kapitelinhalt Sessionstate anpassen, so dass Änderungen in der Textbox nachgehalten werden und nicht durch den zuvor generierten Inhaltstext beim Page-reload überschrieben werden           
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
 
 if 'glossar' in st.session_state:
