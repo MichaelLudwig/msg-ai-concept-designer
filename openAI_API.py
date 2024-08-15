@@ -59,3 +59,22 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
     toc = json.loads(response.choices[0].message.function_call.arguments)
     toc_list = toc["toc"]
     return toc_list
+
+def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, index):
+    client = OpenAI()
+    response = client.chat.completions.create(
+        model = "gpt-4o-mini",
+        messages=[
+            {"role":"user" , "content": "Du schreibst mehrere Kapitel eines " + new_doctype + " zum Thema " + new_title },
+            {"role":"user" , "content": "Schreibe den Inhalt für das Kapitel" + title_text},
+            {"role":"user" , "content": "Beachte den folgenden Kontext und gehe inhaltlich üassend zum Kapitel darauf ein: " + new_context},
+            {"role":"user" , "content": "Das Kapitel ist für folgende Zielgruppe zu schreiben. " + new_stakeholder + " Passe den technischen Detailierungsgrad dieser Zielgruppe an."},
+            {"role":"user" , "content": prompt_text},
+            {"role":"user" , "content": "Der Artikel sollte im folgenden Stil geschreiben sein: " + new_writing_style},
+            {"role":"user" , "content": "Der Artikel soll maximal " + str(new_word_count) + " Worte beinhalten."},
+            {"role":"user" , "content": "Starte jedes Unterkapitel mit dem Präfix #### und verzichte dabei auf Nummerierungen. Nenne nicht noch einmal den Kapitelnamen zu Begin sondern beginne direkt mit dem Inhalt."},
+        ]
+    )
+    chapter_content = response.choices[0].message.content
+    st.session_state.kapitel_inhalt[index] = chapter_content
+    return chapter_content

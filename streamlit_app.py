@@ -124,17 +124,12 @@ for i, item in enumerate(toc_list):
 
     st.session_state.kapitel_info[i] = help_text
     st.session_state.kapitel_prompt[i] = prompt_text
-
-    #if st.session_state.kapitel_inhalt[i] == "":
-        #generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, i)
-
-    st.header(title_text)
-    
+    st.header(title_text)    
     st.info(help_text)
     st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
         prompt_text = st.session_state.prompt_area[i]
-        generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, i)
+        openAI_API.generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, i)
                
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
 
