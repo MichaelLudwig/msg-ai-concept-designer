@@ -155,8 +155,7 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
 if new_submitted:
     
     #Inhaltsbereich generieren  
-    main_title=st.header(new_doctype + ": " + new_title, divider='blue')
-    
+    st.header(new_doctype + ": " + new_title, divider='blue')    
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
