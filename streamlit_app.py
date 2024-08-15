@@ -10,7 +10,7 @@ OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
 
 
 
-def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, index):
+def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, index):
     client = OpenAI()
     response = client.chat.completions.create(
         model = "gpt-4o-mini",
@@ -129,7 +129,7 @@ for i, item in enumerate(toc_list):
     st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
         prompt_text = st.session_state.prompt_area[i]
-        openAI_API.generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, i)
+        openAI_API.generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
                
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
 

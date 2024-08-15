@@ -60,7 +60,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
     toc_list = toc["toc"]
     return toc_list
 
-def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, index):
+def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, index):
     client = OpenAI()
     response = client.chat.completions.create(
         model = "gpt-4o-mini",
