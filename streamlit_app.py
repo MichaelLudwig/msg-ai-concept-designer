@@ -59,11 +59,8 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count, n
     )
 
     # Parse the response
-    #toc = response.choices[0].message["function_call"]["arguments"]["toc"]
-    toc = response.choices[0].message.function_call.arguments
-    data = json.loads(toc)
-    toc_list = data["toc"]
-    return toc_list
+    toc = json.loads(response.choices[0].message.function_call.arguments)
+    return toc["toc"]
 
 def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, index):
     client = OpenAI()
@@ -82,7 +79,6 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
     )
     chapter_content = response.choices[0].message.content
     st.session_state.kapitel_inhalt[index] = chapter_content
-    #st.text = st.session_state.kapitel_inhalt[index]
     return chapter_content
 
 def generate_glossar(content):
