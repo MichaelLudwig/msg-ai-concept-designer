@@ -156,7 +156,7 @@ if new_submitted:
     
     #Inhaltsbereich generieren  
     main_title=st.header(new_doctype + ": " + new_title, divider='blue')
-    st.subheader(main_title, divider='grey')
+    
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
