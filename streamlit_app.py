@@ -16,7 +16,7 @@ if 'toc_list' in st.session_state:
 else:
     toc_list=[]
 
-st.header(st.session_state.new_header, divider='grey') 
+
 
 #--Sidebar ---------------------------------------------------------------------------------------------------------------------------------------
 st.sidebar.title("App-Steuerung")
@@ -68,7 +68,7 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
 if new_submitted:
     
     # Überschriften für Hauptbereich aus Parametern erzeugen
-    st.header(new_doctype + ": " + new_title, divider='grey')    
+    #st.header(new_doctype + ": " + new_title, divider='grey')    
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
@@ -85,6 +85,9 @@ if new_submitted:
 
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
+
+st.header(st.session_state.new_header, divider='grey') 
+
 # Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
 for i, item in enumerate(toc_list):
     title_text = item["title"]
