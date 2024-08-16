@@ -68,7 +68,7 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
 if new_submitted:
     
     # Überschriften für Hauptbereich aus Parametern erzeugen
-    #st.header(new_doctype + ": " + new_title, divider='grey')    
+    st.header(new_doctype + ": " + new_title, divider='grey')    
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
