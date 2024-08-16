@@ -4,7 +4,7 @@ import word_export
 
 st.set_page_config(layout="wide")
 #main_heading=st.title("AI Concept Designer")
-main_heading=st.title("MIKE - Modulare Interaktive Konzept Erstellung")
+main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
 
 
 #--Sessionstat Handling ---------------------------------------------------------------------------------------------------------------------------------------
