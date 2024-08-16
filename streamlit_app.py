@@ -5,6 +5,7 @@ import word_export
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
 
+
 #--Sessionstat Handling ---------------------------------------------------------------------------------------------------------------------------------------
 if 'new_title' not in st.session_state:
     st.session_state.new_title = ""
@@ -14,6 +15,8 @@ if 'toc_list' in st.session_state:
     toc_list=st.session_state.toc_list
 else:
     toc_list=[]
+
+st.header(st.session_state.new_header, divider='grey') 
 
 #--Sidebar ---------------------------------------------------------------------------------------------------------------------------------------
 st.sidebar.title("App-Steuerung")
@@ -65,7 +68,7 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
 if new_submitted:
     
     # Überschriften für Hauptbereich aus Parametern erzeugen
-    st.header(new_doctype + ": " + new_title, divider='grey')    
+    #st.header(new_doctype + ": " + new_title, divider='grey')    
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
