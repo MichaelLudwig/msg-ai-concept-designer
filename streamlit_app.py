@@ -73,10 +73,10 @@ if new_submitted:
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
-    st.spinner(text="Inhaltsverzeichnis wird erstellt ...")
+    with st.spinner(text="Inhaltsverzeichnis wird erstellt ..."):
 
     #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
-    toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count)
+        toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count)
     
     #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
     st.session_state.toc_list = toc_list
