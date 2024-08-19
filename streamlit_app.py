@@ -83,6 +83,8 @@ if new_submitted:
     st.session_state.kapitel_prompt = [""] * len(toc_list)
     st.session_state.prompt_area = [""] * len(toc_list)
 
+    st.spinner(text="Inhaltsverzeichnis wird erstellt ...")
+
 
 
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
