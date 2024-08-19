@@ -3,8 +3,8 @@ import openAI_API
 import word_export
 
 st.set_page_config(layout="wide")
-#main_heading=st.title("AI Concept Designer")
-main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
+main_heading=st.title("AI Concept Designer")
+#main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
 
 
 #--Sessionstat Handling ---------------------------------------------------------------------------------------------------------------------------------------
