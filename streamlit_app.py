@@ -73,6 +73,8 @@ if new_submitted:
     st.session_state.new_title = new_title
     st.session_state.new_header = new_doctype + ": " + new_title
 
+    st.spinner(text="Inhaltsverzeichnis wird erstellt ...")
+
     #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
     toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count)
     
@@ -83,7 +85,7 @@ if new_submitted:
     st.session_state.kapitel_prompt = [""] * len(toc_list)
     st.session_state.prompt_area = [""] * len(toc_list)
 
-    st.spinner(text="Inhaltsverzeichnis wird erstellt ...")
+    
 
 
 
