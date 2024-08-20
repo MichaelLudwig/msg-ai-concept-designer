@@ -84,8 +84,8 @@ def generate_glossar(content):
         model = openAI_model,
         messages=[
             {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
-            {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."}
-            #{"role":"user" , "content": "Sollten dir keine Inhalte vorliegen, weise mich darauf hin und erstelle kein Glossar."}            
+            {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."},
+            {"role":"user" , "content": "Sollten dir keine Inhalte vorliegen, weise mich darauf hin und erstelle kein Glossar."}            
         ]
     )
 
