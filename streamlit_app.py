@@ -116,7 +116,7 @@ for i, item in enumerate(toc_list):
     formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
     formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
     st.session_state.kapitel_header[i].hook = formatted_header
-    st.markdown(f"[{st.session_state.kapitel_header[i].text}](#{st.session_state.kapitel_header[i].hook})")
+    #st.markdown(f"[{st.session_state.kapitel_header[i].text}](#{st.session_state.kapitel_header[i].hook})")
 
 
     st.header(title_text) 
