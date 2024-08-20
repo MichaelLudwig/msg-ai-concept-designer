@@ -96,6 +96,10 @@ if new_submitted:
 
 st.header(st.session_state.new_header, divider='grey') 
 
+if 'kapitel_header' in st.session_state:
+for j, item in enumerate(st.session_state.kapitel_info):
+    st.markdown(f"[{st.session_state.kapitel_header[j].text}](#{st.session_state.kapitel_header[j].hook})")
+
 # Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
 for i, item in enumerate(toc_list):
     title_text = item["title"]
