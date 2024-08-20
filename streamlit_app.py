@@ -96,9 +96,13 @@ if new_submitted:
 
 st.header(st.session_state.new_header, divider='grey') 
 
-if 'kapitel_header' in st.session_state:
-    for j, item in enumerate(st.session_state.kapitel_info):
-        st.markdown(f"[{st.session_state.kapitel_header[j].text}](#{st.session_state.kapitel_header[j].hook})")
+for i, item in enumerate(toc_list):
+    #Nachhalten des Inhaltsverzeichnisses mit Links
+    header_text = item["title"].lower()  # In Kleinbuchstaben umwandeln
+    formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
+    formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
+    st.session_state.kapitel_header[i].hook = formatted_header
+    st.markdown(f"[{item["title"]}](#{st.session_state.kapitel_header[j].hook})")
 
 # Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
 for i, item in enumerate(toc_list):
@@ -111,17 +115,8 @@ for i, item in enumerate(toc_list):
     st.session_state.kapitel_prompt[i] = prompt_text
 
     #Aufbau der Seitenkomponente für jedes Kapitel
-
     #Titel
     st.session_state.kapitel_header[i].text = title_text
-
-    #Nachhalten des Inhaltsverzeichnisses mit Links
-    header_text = title_text.lower()  # In Kleinbuchstaben umwandeln
-    formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
-    formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
-    st.session_state.kapitel_header[i].hook = formatted_header
-    #st.markdown(f"[{st.session_state.kapitel_header[i].text}](#{st.session_state.kapitel_header[i].hook})")
-
 
     st.header(title_text) 
     st.info(help_text)
