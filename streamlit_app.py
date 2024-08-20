@@ -99,13 +99,14 @@ st.header(st.session_state.new_header, divider='grey')
 if 'toc_list' in st.session_state:
     st.header("Inhaltsverzeichnis")
 
-for i, item in enumerate(toc_list):
-    #Nachhalten des Inhaltsverzeichnisses mit Links
-    title_text = item["title"]
-    header_text = title_text.lower()  # In Kleinbuchstaben umwandeln
-    formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
-    formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
-    st.markdown(f"[{title_text}](#{formatted_header})")
+#Inhaltsverzeichnis mit Links zu Kapiteln erstellen (in der Form noch buggy, da Links zu Üeberschriften mit Umlauten nicht Funktionieren)
+#for i, item in enumerate(toc_list):
+#    #Nachhalten des Inhaltsverzeichnisses mit Links
+#    title_text = item["title"]
+#    header_text = title_text.lower()  # In Kleinbuchstaben umwandeln
+#    formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
+#    formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
+#    st.markdown(f"[{title_text}](#{formatted_header})")
 
 # Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
 for i, item in enumerate(toc_list):
