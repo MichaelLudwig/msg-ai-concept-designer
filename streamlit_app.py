@@ -118,8 +118,9 @@ for i, item in enumerate(toc_list):
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
 
 if 'glossar' in st.session_state:
-    st.header("Glossar")
-    st.write(st.session_state.glossar)
+    if not st.session_state.glossar == "":
+        st.header("Glossar")
+        st.write(st.session_state.glossar)
 
 
 #st.write(st.session_state.toc_list)
