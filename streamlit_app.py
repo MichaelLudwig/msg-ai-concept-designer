@@ -96,7 +96,9 @@ if new_submitted:
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
 
 st.header(st.session_state.new_header, divider='grey') 
-
+if 'toc_list' in st.session_state:
+    st.header("Inhaltsverzeichnis")
+    
 for i, item in enumerate(toc_list):
     #Nachhalten des Inhaltsverzeichnisses mit Links
     title_text = item["title"]
