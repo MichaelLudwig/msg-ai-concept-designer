@@ -80,6 +80,7 @@ if new_submitted:
     
     #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
     st.session_state.toc_list = toc_list
+    st.session_state.kapitel_header = [""] * len(toc_list)
     st.session_state.kapitel_info = [""] * len(toc_list)
     st.session_state.kapitel_inhalt = [""] * len(toc_list)
     st.session_state.kapitel_prompt = [""] * len(toc_list)
@@ -105,7 +106,7 @@ for i, item in enumerate(toc_list):
     st.session_state.kapitel_prompt[i] = prompt_text
 
     #Aufbau der Seitenkomponente für jedes Kapitel
-    st.header(title_text)    
+    st.session_state.kapitel_header[i] = st.header(title_text)    
     st.info(help_text)
     st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     
