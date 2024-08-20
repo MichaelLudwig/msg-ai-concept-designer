@@ -97,7 +97,6 @@ if new_submitted:
 
 st.header(st.session_state.new_header, divider='grey') 
 
-st.header("Inhaltsverzeichnis")
 for i, item in enumerate(toc_list):
     #Nachhalten des Inhaltsverzeichnisses mit Links
     title_text = item["title"]
