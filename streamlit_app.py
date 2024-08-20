@@ -102,8 +102,7 @@ for i, item in enumerate(toc_list):
     header_text = title_text.lower()  # In Kleinbuchstaben umwandeln
     formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
     formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
-    st.session_state.kapitel_header[i].hook = formatted_header
-    st.markdown(f"[{title_text}](#{st.session_state.kapitel_header[j].hook})")
+    st.markdown(f"[{title_text}](#{formatted_header})")
 
 # Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
 for i, item in enumerate(toc_list):
