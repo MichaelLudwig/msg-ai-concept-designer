@@ -43,7 +43,7 @@ new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 
 #Schaltflächen für die Kapitelbearbeitung 
 st.sidebar.subheader("Kapitel Steuerelemente", divider='grey')  
-st.markdown(f"[{"Zurück zum Inhaltsverzeichnis"}](#inhaltsverzeichnis)") 
+st.markdown(f"[{"Zurück zum Inhaltsverzeichnis"}](#{"inhaltsverzeichnis"})")
 new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=1000, value=100, step=50)
 new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
 if new_writing_style == "msg Konzept":
