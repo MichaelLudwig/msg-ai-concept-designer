@@ -116,8 +116,6 @@ for i, item in enumerate(toc_list):
 
     #Aufbau der Seitenkomponente für jedes Kapitel
     #Titel
-    st.session_state.kapitel_header[i].text = title_text
-
     st.header(title_text) 
     st.info(help_text)
     st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
