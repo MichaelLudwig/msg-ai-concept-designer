@@ -96,8 +96,6 @@ if new_submitted:
 #--Content Area ---------------------------------------------------------------------------------------------------------------------------------------
 
 st.header(st.session_state.new_header, divider='grey') 
-if 'toc_list' in st.session_state:
-    st.header("Inhaltsverzeichnis")
 
 #Inhaltsverzeichnis mit Links zu Kapiteln erstellen (in der Form noch buggy, da Links zu Üeberschriften mit Umlauten nicht Funktionieren)
 #for i, item in enumerate(toc_list):
