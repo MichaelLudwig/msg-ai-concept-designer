@@ -119,6 +119,10 @@ for i, item in enumerate(toc_list):
 
 if 'glossar' in st.session_state:
     st.header("Glossar")
+
+    if st.session_state.glossar == "":
+        st.write("Zur Erstellung des Glossars bitte die Schaltfläche im Navigationsbereich im Bereich Word Export benutzen.")
+    
     st.write(st.session_state.glossar)
 
 
