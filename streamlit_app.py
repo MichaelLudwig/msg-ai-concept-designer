@@ -34,7 +34,7 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
-    "Schulungskonzept", "Kommunikationskonzetpt", "Benutzerhandbuch"])
+    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"])
 new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
