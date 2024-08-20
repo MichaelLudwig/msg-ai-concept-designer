@@ -85,6 +85,7 @@ def generate_glossar(content):
         messages=[
             {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
             {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."},
+            {"role":"user" , "content": "Erkläre ausschließlich Abkürzungen und Begriffe aus den gegebenen Kapitelinhalten."},
             {"role":"user" , "content": "Sollten dir keine Inhalte vorliegen, weise mich darauf hin und erstelle kein Glossar."}            
         ]
     )
