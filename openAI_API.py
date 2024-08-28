@@ -95,6 +95,6 @@ def generate_glossar(content):
         ]
     )
 
-    glossar = response.choices[0].message.content    
+    glossar = response.choices[0].message.content     
     st.write(response.usage)
     return glossar
