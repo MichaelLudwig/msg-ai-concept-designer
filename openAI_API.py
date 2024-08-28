@@ -57,6 +57,11 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
     # Parse the response
     toc = json.loads(response.choices[0].message.function_call.arguments)
     toc_list = toc["toc"]
+
+    toc_list[0].input_tokens = response['usage']['prompt_tokens']
+    toc_list[0].output_tokens = response['usage']['completion_tokens']
+    toc_list[0].total_tokens = response['usage']['total_tokens']
+
     return toc_list
 
 def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, index):
