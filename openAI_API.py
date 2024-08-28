@@ -60,7 +60,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
 
     #toc_list.input_tokens = response['usage']['prompt_tokens']
     #toc_list.output_tokens = response['usage']['completion_tokens']
-    #toc_list.total_tokens = response['usage']['total_tokens']
+    st.write(response['usage']['total_tokens'])
 
     return toc_list
 
