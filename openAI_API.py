@@ -81,6 +81,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
     )
     chapter_content = response.choices[0].message.content
     st.session_state.kapitel_inhalt[index] = chapter_content
+    st.write(response.usage)
     return chapter_content
 
 def generate_glossar(content):
