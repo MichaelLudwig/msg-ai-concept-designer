@@ -28,10 +28,11 @@ st.sidebar.subheader("Neues Dokument", divider='grey')
 newdoc_form = st.sidebar.form("newdoc_form_key")
 new_title = newdoc_form.text_input("Dokumenttitel")
 new_doctype = newdoc_form.selectbox("Dokumenttyp",
-    ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", "Marktanalyse",
+    ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
+    # "Marktanalyse",
     "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
     "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
-    "Datenschutzkonzept", "Datenschutzerklärung", "Schutzbedarfsfeststellung (nach BSI Grundschutz)", "Auftragsverarbeitungs-Vertrag", "Verzeichnis von Verarbeitungstätigkeiten", "Datenschutzfolgeabschätzung",
+    #"Datenschutzkonzept", "Datenschutzerklärung", "Schutzbedarfsfeststellung (nach BSI Grundschutz)", "Auftragsverarbeitungs-Vertrag", "Verzeichnis von Verarbeitungstätigkeiten", "Datenschutzfolgeabschätzung",
     "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
