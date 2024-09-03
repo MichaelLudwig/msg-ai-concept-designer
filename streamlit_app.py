@@ -31,7 +31,7 @@ st.sidebar.title("App-Steuerung")
 #Schaltflächen für neues Dokument
 st.sidebar.subheader("Neues Dokument", divider='grey')
 newdoc_form = st.sidebar.form("newdoc_form_key")
-new_title = newdoc_form.text_input("Dokumenttitel")
+st.session_state.new_title = newdoc_form.text_input("Dokumenttitel")
 new_doctype = newdoc_form.selectbox("Dokumenttyp",
     ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
     # "Marktanalyse",
@@ -81,13 +81,13 @@ if new_submitted:
     
     # Überschriften für Hauptbereich aus Parametern erzeugen
     #st.header(new_doctype + ": " + new_title, divider='grey')    
-    st.session_state.new_title = new_title
-    st.session_state.new_header = new_doctype + ": " + new_title
+    #st.session_state.new_title = new_title
+    st.session_state.new_header = new_doctype + ": " + st.session_state.new_title
 
     with st.spinner(text="Inhaltsverzeichnis wird erstellt ..."):
 
     #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
-        toc_list = openAI_API.generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count)
+        toc_list = openAI_API.generate_toc(new_doctype, st.session_state.new_title, new_content_focus, new_chapter_count)
     
     #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
     st.session_state.toc_list = toc_list
@@ -137,7 +137,7 @@ for i, item in enumerate(toc_list):
     #Schaltfläche um die Kapitelinhalte zu generieren
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
         prompt_text = st.session_state.prompt_area[i]
-        openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
+        openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], new_doctype, st.session_state.new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
 
     #Kapitelinhalt Sessionstate anpassen, so dass Änderungen in der Textbox nachgehalten werden und nicht durch den zuvor generierten Inhaltstext beim Page-reload überschrieben werden           
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
