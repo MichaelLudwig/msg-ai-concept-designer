@@ -14,7 +14,10 @@ main_heading=st.title("AI Concept Designer")
 
 
 #--Sessionstate Handling ---------------------------------------------------------------------------------------------------------------------------------------
-
+if 'new_title' not in st.session_state:
+    st.session_state.new_title = ""
+if 'new_header' not in st.session_state:
+    st.session_state.new_header = ""
 if 'toc_list' in st.session_state:
     toc_list=st.session_state.toc_list
 else:
