@@ -122,13 +122,15 @@ for i, item in enumerate(toc_list):
     prompt_text= item["prompt_text"]
 
     #Inhalte aus generierten Kapitelverzeichnis in SessionState nachhalten damit sie beim reload erhalten bleiben
-    st.session_state.kapitel_info[i] = help_text
+    if 'kapitel_info' not in st.session_state:
+        st.session_state.kapitel_info[i] = help_text
+    
     st.session_state.kapitel_prompt[i] = prompt_text
 
     #Aufbau der Seitenkomponente für jedes Kapitel
     #Titel
     st.header(title_text) 
-    st.info(help_text)
+    st.info(st.session_state.kapitel_info[i])
     st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     
     #Schaltfläche um die Kapitelinhalte zu generieren
