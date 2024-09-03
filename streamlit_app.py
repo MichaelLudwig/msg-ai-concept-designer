@@ -180,7 +180,7 @@ def upload_sessionstate_from_json(uploaded_file):
         # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
         st.session_state.update(session_dict)
-        st.success("SessionState erfolgreich aktualisiert!")
+        st.success("Projekt wurde eingelesen! Bitte auf das x neben der Datei klicken um die Datei zu entfernen und die Seite neu zu laden!")
 
 # JSON-Datei hochladen
 uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei hochladen", type="json")
