@@ -4,15 +4,7 @@ import word_export
 import io
 import json
 
-
-#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
-def upload_sessionstate_from_json(uploaded_file):
-    if uploaded_file is not None:
-        # JSON-Daten lesen und in den SessionState schreiben
-        session_dict = json.load(uploaded_file)
-        st.session_state.update(session_dict)
-        st.success("SessionState erfolgreich aktualisiert!")
-        
+ 
 
         
 
@@ -21,7 +13,7 @@ main_heading=st.title("AI Concept Designer")
 #main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
 
 
-#--Sessionstat Handling ---------------------------------------------------------------------------------------------------------------------------------------
+#--Sessionstate Handling ---------------------------------------------------------------------------------------------------------------------------------------
 if 'new_title' not in st.session_state:
     st.session_state.new_title = ""
 if 'new_header' not in st.session_state:
@@ -76,6 +68,9 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
         if 'glossar' not in st.session_state:
             st.session_state.glossar = openAI_API.generate_glossar(st.session_state.kapitel_inhalt)
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
+
+
+#Schaltflächen zum Speichern des aktuellen Projektes
 
 
 
@@ -178,6 +173,14 @@ def save_sessionstate_to_json():
 
 # Download-Button anzeigen
 save_sessionstate_to_json()
+
+#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
+def upload_sessionstate_from_json(uploaded_file):
+    if uploaded_file is not None:
+        # JSON-Daten lesen und in den SessionState schreiben
+        session_dict = json.load(uploaded_file)
+        st.session_state.update(session_dict)
+        st.success("SessionState erfolgreich aktualisiert!")
 
 # JSON-Datei hochladen
 uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei hochladen", type="json")
