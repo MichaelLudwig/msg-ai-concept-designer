@@ -95,7 +95,7 @@ if new_submitted:
     st.session_state.kapitel_info = [""] * len(toc_list)
     st.session_state.kapitel_inhalt = [""] * len(toc_list)
     st.session_state.kapitel_prompt = [""] * len(toc_list)
-    st.session_state.prompt_area = [""] * len(toc_list)
+    # st.session_state.prompt_area = [""] * len(toc_list)
     st.session_state.glossar = ""
 
     
