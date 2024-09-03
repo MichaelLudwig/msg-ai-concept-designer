@@ -3,7 +3,15 @@ import openAI_API
 import word_export
 import io
 import json
-#import re
+
+
+#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
+def upload_sessionstate_from_json(uploaded_file):
+    if uploaded_file is not None:
+        # JSON-Daten lesen und in den SessionState schreiben
+        session_dict = json.load(uploaded_file)
+        st.session_state.update(session_dict)
+        st.success("SessionState erfolgreich aktualisiert!")
 
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
@@ -168,12 +176,7 @@ def save_sessionstate_to_json():
 # Download-Button anzeigen
 save_sessionstate_to_json()
 
-def upload_sessionstate_from_json(uploaded_file):
-    if uploaded_file is not None:
-        # JSON-Daten lesen und in den SessionState schreiben
-        session_dict = json.load(uploaded_file)
-        st.session_state.update(session_dict)
-        st.success("SessionState erfolgreich aktualisiert!")
+
 
 
 # JSON-Datei hochladen
