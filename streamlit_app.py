@@ -138,7 +138,7 @@ for i, item in enumerate(toc_list):
     
     #Schaltfläche um die Kapitelinhalte zu generieren
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
-        prompt_text = st.session_state.prompt_area[i]
+        #prompt_text = st.session_state.prompt_area[i]
         openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], new_doctype, st.session_state.new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
 
     #Kapitelinhalt Sessionstate anpassen, so dass Änderungen in der Textbox nachgehalten werden und nicht durch den zuvor generierten Inhaltstext beim Page-reload überschrieben werden           
