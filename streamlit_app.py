@@ -140,5 +140,5 @@ if 'glossar' in st.session_state:
     st.write(st.session_state.glossar)
 
 if "toc_list" in st.session_state:
-    #st.write(st.session_state.toc_list)
+    st.write(st.session_state.toc_list)
 
