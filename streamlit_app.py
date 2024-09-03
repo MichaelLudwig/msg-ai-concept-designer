@@ -14,7 +14,7 @@ def upload_sessionstate_from_json(uploaded_file):
         st.success("SessionState erfolgreich aktualisiert!")
         
         # Hochgeladenes File aus dem SessionState entfernen
-        st.session_state['uploaded_file'] = None
+        #st.session_state['uploaded_file'] = None
         
         # Seite neu laden
         # st.experimental_rerun()
