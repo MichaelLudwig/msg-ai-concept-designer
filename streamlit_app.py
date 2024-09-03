@@ -186,7 +186,7 @@ def upload_sessionstate_from_json(uploaded_file):
         st.success("Projekt wurde eingelesen! Bitte unten liknks auf das x neben der Datei klicken um die Datei zu entfernen und die Seite neu zu laden!")
 
 # JSON-Datei hochladen
-uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei hochladen", type="json")
+uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
 
 # Button zum Hochladen und SessionState aktualisieren
 if uploaded_file is not None:
