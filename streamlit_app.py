@@ -13,6 +13,12 @@ def upload_sessionstate_from_json(uploaded_file):
         st.session_state.update(session_dict)
         st.success("SessionState erfolgreich aktualisiert!")
         
+        # Hochgeladenes File aus dem SessionState entfernen
+        st.session_state['uploaded_file'] = None
+        
+        # Seite neu laden
+        st.experimental_rerun()
+        
 
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
@@ -183,4 +189,3 @@ uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei hoc
 # Button zum Hochladen und SessionState aktualisieren
 if uploaded_file is not None:
     upload_sessionstate_from_json(uploaded_file)
-    st.experimental_rerun()
