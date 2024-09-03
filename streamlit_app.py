@@ -167,7 +167,7 @@ def save_sessionstate_to_json():
     
     # Download-Button anzeigen
     st.sidebar.download_button(
-        label="Aktuelles Projekt speichern",
+        label="Aktuelles Projekt in Datei speichern",
         data=json_io,
         file_name="session_state.json",
         mime="application/json"
