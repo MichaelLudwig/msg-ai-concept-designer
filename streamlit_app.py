@@ -42,7 +42,8 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
     "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"])
-st.session_state.new_content_focus = ""
+if 'new_content_focus' not in st.session_state:
+    st.session_state.new_content_focus = ""
 st.session_state.new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt", value=st.session_state.new_content_focus)
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
@@ -88,7 +89,7 @@ if new_submitted:
     with st.spinner(text="Inhaltsverzeichnis wird erstellt ..."):
 
     #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
-        toc_list = openAI_API.generate_toc(new_doctype, st.session_state.new_title, new_content_focus, new_chapter_count)
+        toc_list = openAI_API.generate_toc(new_doctype, st.session_state.new_title, st.session_state.new_content_focus, new_chapter_count)
     
     #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
     st.session_state.toc_list = toc_list
