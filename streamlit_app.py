@@ -17,7 +17,7 @@ def upload_sessionstate_from_json(uploaded_file):
         st.session_state['uploaded_file'] = None
         
         # Seite neu laden
-        st.experimental_rerun()
+        # st.experimental_rerun()
         
 
 st.set_page_config(layout="wide")
