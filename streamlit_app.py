@@ -1,6 +1,8 @@
 import streamlit as st
 import openAI_API
 import word_export
+import io
+import json
 #import re
 
 st.set_page_config(layout="wide")
@@ -139,6 +141,44 @@ if 'glossar' in st.session_state:
     
     st.write(st.session_state.glossar)
 
-if "toc_list" in st.session_state:
-    st.write(st.session_state.toc_list)
+#if "toc_list" in st.session_state:
+    #st.write(st.session_state.toc_list)
 
+
+
+# Funktion zum Speichern des SessionState in JSON und Download anbieten
+def save_sessionstate_to_json():
+    # SessionState in ein JSON-kompatibles Format umwandeln
+    session_dict = {k: v for k, v in st.session_state.items()}
+    
+    # JSON in einen BytesIO-Stream schreiben
+    json_str = json.dumps(session_dict, indent=4)
+    json_bytes = json_str.encode('utf-8')
+    json_io = io.BytesIO(json_bytes)
+    
+    # Download-Button anzeigen
+    st.sidebar.download_button(
+        label="Aktuelles Projekt speichern",
+        data=json_io,
+        file_name="session_state.json",
+        mime="application/json"
+    )
+
+
+# Download-Button anzeigen
+save_sessionstate_to_json()
+
+def upload_sessionstate_from_json(uploaded_file):
+    if uploaded_file is not None:
+        # JSON-Daten lesen und in den SessionState schreiben
+        session_dict = json.load(uploaded_file)
+        st.session_state.update(session_dict)
+        st.success("SessionState erfolgreich aktualisiert!")
+
+
+# JSON-Datei hochladen
+uploaded_file = st.sidebar.file_uploader("Lade eine JSON-Datei hoch, um den SessionState zu aktualisieren", type="json")
+
+# Button zum Hochladen und SessionState aktualisieren
+if uploaded_file is not None:
+    upload_sessionstate_from_json(uploaded_file)
