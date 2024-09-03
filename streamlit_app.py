@@ -125,13 +125,14 @@ for i, item in enumerate(toc_list):
     if st.session_state.kapitel_info[i] == "":
         st.session_state.kapitel_info[i] = help_text
     
-    st.session_state.kapitel_prompt[i] = prompt_text
+    if st.session_state.kapitel_prompt[i] == "":
+        st.session_state.kapitel_prompt[i] = prompt_text
 
     #Aufbau der Seitenkomponente für jedes Kapitel
     #Titel
     st.header(title_text) 
     st.info(st.session_state.kapitel_info[i])
-    st.session_state.prompt_area[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
+    st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     
     #Schaltfläche um die Kapitelinhalte zu generieren
     if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
