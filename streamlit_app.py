@@ -13,11 +13,7 @@ def upload_sessionstate_from_json(uploaded_file):
         st.session_state.update(session_dict)
         st.success("SessionState erfolgreich aktualisiert!")
         
-        # Hochgeladenes File aus dem SessionState entfernen
-        #st.session_state['uploaded_file'] = None
-        
-        # Seite neu laden
-        # st.experimental_rerun()
+
         
 
 st.set_page_config(layout="wide")
@@ -160,14 +156,17 @@ if 'glossar' in st.session_state:
     #st.write(st.session_state.toc_list)
 
 
+# Funktion zum Entfernen der Schlüssel mit False-Werten
+def remove_false_entries(session_data):
+    return {k: v for k, v in session_data.items() if v is not False}
 
 # Funktion zum Speichern des SessionState in JSON und Download anbieten
 def save_sessionstate_to_json():
     # SessionState in ein JSON-kompatibles Format umwandeln
-    session_dict = {k: v for k, v in st.session_state.items()}
+    filtered_session_dict = remove_false_entries(st.session_state.my_state)
     
     # JSON in einen BytesIO-Stream schreiben
-    json_str = json.dumps(session_dict, indent=4)
+    json_str = json.dumps(filtered_session_dict, indent=4)
     json_bytes = json_str.encode('utf-8')
     json_io = io.BytesIO(json_bytes)
     
