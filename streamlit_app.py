@@ -158,7 +158,7 @@ st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
 # Funktion zum Speichern des SessionState in JSON und Download anbieten
 def save_sessionstate_to_json():
     # SessionState in ein JSON-kompatibles Format umwandeln
-    session_dict = {k: v for k, v in st.session_state.items() if v is not False}
+    session_dict = {k: v for k, v in st.session_state.items() if v not in [False, True]}
     
     # JSON in einen BytesIO-Stream schreiben
     json_str = json.dumps(session_dict, indent=4)
