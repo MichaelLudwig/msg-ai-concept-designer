@@ -42,7 +42,7 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
     "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"])
-new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt")
+st.session_state.new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt", value=st.session_state.new_content_focus)
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 
