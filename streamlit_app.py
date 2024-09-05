@@ -157,3 +157,42 @@ if 'glossar' in st.session_state:
 
 
 
+#Schaltflächen für den Export und import des aktuellen Bearbeitungsstands
+st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
+
+# Funktion zum Speichern des SessionState in JSON und Download anbieten
+def save_sessionstate_to_json():
+    # SessionState in ein JSON-kompatibles Format umwandeln
+    session_dict = {k: v for k, v in st.session_state.items() if v not in [False, True]}
+    
+    # JSON in einen BytesIO-Stream schreiben
+    json_str = json.dumps(session_dict, indent=4)
+    json_bytes = json_str.encode('utf-8')
+    json_io = io.BytesIO(json_bytes)
+    
+    # Download-Button anzeigen
+    st.sidebar.download_button(
+        label="Aktuelles Projekt in Datei speichern",
+        data=json_io,
+        file_name="session_state.json",
+        mime="application/json"
+    )
+
+
+# Download-Button anzeigen
+save_sessionstate_to_json()
+
+#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
+def upload_sessionstate_from_json(uploaded_file):
+    if uploaded_file is not None:
+        # JSON-Daten lesen und in den SessionState schreiben
+        session_dict = json.load(uploaded_file)
+        st.session_state.update(session_dict)
+        st.success("Projekt wurde eingelesen! Bitte unten links auf das x neben der Datei klicken um diese zu entfernen und die Seite neu zu laden!")
+
+# JSON-Datei hochladen
+uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
+
+# Button zum Hochladen und SessionState aktualisieren
+if uploaded_file is not None:
+    upload_sessionstate_from_json(uploaded_file)
