@@ -31,7 +31,7 @@ st.sidebar.title("App-Steuerung")
 #Schaltflächen für neues Dokument
 st.sidebar.subheader("Neues Dokument", divider='grey')
 newdoc_form = st.sidebar.form("newdoc_form_key")
-st.session_state.new_title = newdoc_form.text_input("Dokumenttitel")
+st.session_state.new_title = newdoc_form.text_input("Dokumenttitel", help="Der Titel, den das Dokument haben soll")
 new_doctype = newdoc_form.selectbox("Dokumenttyp",
     ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
     # "Marktanalyse",
@@ -44,7 +44,7 @@ new_doctype = newdoc_form.selectbox("Dokumenttyp",
     "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"])
 if 'new_content_focus' not in st.session_state:
     st.session_state.new_content_focus = ""
-st.session_state.new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt", value=st.session_state.new_content_focus)
+st.session_state.new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt", value=st.session_state.new_content_focus, help="Nenne alle Aspekte, die im Dokument zwingend behandelt werden sollen. Sie werden nach Themen geclustert und im Output z.b. in Form von Kapiteln erscheinen")
 new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 
@@ -56,8 +56,8 @@ new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=
 new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
 if new_writing_style == "msg Konzept":
     new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."        
-new_context = st.sidebar.text_area("Kontext")
-new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachpersonal")
+new_context = st.sidebar.text_area("Kontext", help="Nenne hier Dinge wie Branche und Größe des Kunden, vorhandene Infrastruktur (keine sensiblen Daten!), Ziel des Konzepts, etc.")
+new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachpersonal", help="Beschreibe die Leserschaft deines Dokuments, z.b. Admins, Management, C-Level, fachliche Leitung, etc.")
 
 
 #Schaltflächen für den Word Export
