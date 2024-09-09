@@ -3,6 +3,8 @@ import openAI_API
 import word_export
 import io
 import json
+import re
+import unicodedata
 
  
 
@@ -108,21 +110,32 @@ if new_submitted:
 
 st.header(st.session_state.new_header, divider='grey') 
 
-#Inhaltsverzeichnis mit Links zu Kapiteln erstellen (in der Form noch buggy, da Links zu Üeberschriften mit Umlauten nicht Funktionieren)
-#for i, item in enumerate(toc_list):
-#    #Nachhalten des Inhaltsverzeichnisses mit Links
-#    title_text = item["title"]
-#    header_text = title_text.lower()  # In Kleinbuchstaben umwandeln
-#    formatted_header = re.sub(r'[^a-z0-9\säöü-]', '', header_text)  # Nicht-alphanumerische Zeichen entfernen
-#    formatted_header = re.sub(r'\s+', '-', formatted_header)  # Leerzeichen durch Bindestriche ersetzen
-#    st.markdown(f"[{title_text}](#{formatted_header})")
+# Funktion zur Generierung von URL-freundlichen Ankern
+def generate_anchor(text):
+    # Entferne Umlaute und konvertiere zu ASCII
+    text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('ASCII')
+    # Konvertiere zu Kleinbuchstaben und ersetze Leerzeichen durch Bindestriche
+    text = re.sub(r'\W+', '-', text.lower()).strip('-')
+    return text
 
-# Erstellen der Webseinte-Struktur mit Überschriften Infoboxen und Textboxen
-for i, item in enumerate(toc_list):
+# Inhaltsverzeichnis mit Links zu Kapiteln erstellen
+st.subheader("Inhaltsverzeichnis")
+for i, item in enumerate(st.session_state.toc_list):
+    title_text = item["title"]
+    anchor = generate_anchor(title_text)
+    st.markdown(f"- [{title_text}](#{anchor})")
+
+# Erstellen der Webseiten-Struktur mit Überschriften, Infoboxen und Textboxen
+for i, item in enumerate(st.session_state.toc_list):
     title_text = item["title"]
     help_text= item["help_text"]
     prompt_text= item["prompt_text"]
-
+    anchor = generate_anchor(title_text)
+    
+    # Verwende st.markdown mit HTML, um einen benutzerdefinierten Anker zu setzen
+    st.markdown(f'<a name="{anchor}"></a>', unsafe_allow_html=True)
+    st.header(title_text)
+    
     #Inhalte aus generierten Kapitelverzeichnis in SessionState nachhalten damit sie beim reload erhalten bleiben
     if st.session_state.kapitel_info[i] == "":
         st.session_state.kapitel_info[i] = help_text
@@ -132,7 +145,6 @@ for i, item in enumerate(toc_list):
 
     #Aufbau der Seitenkomponente für jedes Kapitel
     #Titel
-    st.header(title_text) 
     st.info(st.session_state.kapitel_info[i])
     st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     
