@@ -232,7 +232,6 @@ st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
 
 # Funktion zum Speichern des SessionState in JSON und Download anbieten
 def save_sessionstate_to_json():
-    # SessionState in ein JSON-kompatibles Format umwandeln
     def serialize(obj):
         if isinstance(obj, (int, float, str, bool, type(None))):
             return obj
@@ -241,16 +240,14 @@ def save_sessionstate_to_json():
         elif isinstance(obj, dict):
             return {key: serialize(value) for key, value in obj.items()}
         else:
-            return str(obj)  # Konvertiere nicht-serialisierbare Objekte in Strings
+            return str(obj)
 
     session_dict = {k: serialize(v) for k, v in st.session_state.items() if not k.startswith('_')}
     
-    # JSON in einen BytesIO-Stream schreiben
     json_str = json.dumps(session_dict, indent=4)
     json_bytes = json_str.encode('utf-8')
     json_io = io.BytesIO(json_bytes)
     
-    # Download-Button anzeigen
     st.sidebar.download_button(
         label="Aktuelles Projekt in Datei speichern",
         data=json_io,
@@ -264,12 +261,10 @@ save_sessionstate_to_json()
 #-------Sessionstate setzen wenn Projekt importiert wurde -------------------
 def upload_sessionstate_from_json(uploaded_file):
     if uploaded_file is not None:
-        # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
         for key, value in session_dict.items():
-            if key not in st.session_state or not callable(st.session_state[key]):
+            if key not in st.session_state:
                 st.session_state[key] = value
-        st.session_state.project_loaded = True
         return True
     return False
 
@@ -287,9 +282,10 @@ if uploaded_file is not None and 'project_loaded' not in st.session_state:
         
         Erst dann werden alle geladenen Informationen korrekt angezeigt.
         """)
-        st.session_state.project_uploader = None  # Reset file uploader
+        st.session_state.project_loaded = True
 
 # Überprüfen, ob ein Projekt geladen wurde und die Seite aktualisieren
 if 'project_loaded' in st.session_state and st.session_state.project_loaded:
     del st.session_state.project_loaded
+    st.experimental_rerun()
 
