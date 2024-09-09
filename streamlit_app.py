@@ -165,11 +165,13 @@ def create_colored_toc():
         if has_content:
             color = "#d4edda"  # Grün (success)
             border_color = "#c3e6cb"
-            checkmark = "✓"  # Grünes Häkchen
+            icon = "✓"  # Grünes Häkchen
+            icon_color = "#28a745"  # Grün
         else:
             color = "#cce5ff"  # Blau (info)
             border_color = "#b8daff"
-            checkmark = "o"  # Kein Häkchen
+            icon = "!"  # Ausrufezeichen
+            icon_color = "#ffc107"  # Gelb (warning)
         
         # HTML für farbigen Link erstellen
         colored_link = f"""
@@ -189,9 +191,9 @@ def create_colored_toc():
                 {title_text}
             </a>
             <span style="
-                color: #28a745;
+                color: {icon_color};
                 font-weight: bold;">
-                {checkmark}
+                {icon}
             </span>
         </div>
         """
