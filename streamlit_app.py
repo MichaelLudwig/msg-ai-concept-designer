@@ -233,7 +233,17 @@ st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
 # Funktion zum Speichern des SessionState in JSON und Download anbieten
 def save_sessionstate_to_json():
     # SessionState in ein JSON-kompatibles Format umwandeln
-    session_dict = {k: v for k, v in st.session_state.items() if v not in [False, True]}
+    def serialize(obj):
+        if isinstance(obj, (int, float, str, bool, type(None))):
+            return obj
+        elif isinstance(obj, list):
+            return [serialize(item) for item in obj]
+        elif isinstance(obj, dict):
+            return {key: serialize(value) for key, value in obj.items()}
+        else:
+            return str(obj)  # Konvertiere nicht-serialisierbare Objekte in Strings
+
+    session_dict = {k: serialize(v) for k, v in st.session_state.items() if not k.startswith('_')}
     
     # JSON in einen BytesIO-Stream schreiben
     json_str = json.dumps(session_dict, indent=4)
@@ -256,7 +266,9 @@ def upload_sessionstate_from_json(uploaded_file):
     if uploaded_file is not None:
         # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
-        st.session_state.update(session_dict)
+        for key, value in session_dict.items():
+            if key not in st.session_state or not callable(st.session_state[key]):
+                st.session_state[key] = value
         st.session_state.project_loaded = True
         return True
     return False
