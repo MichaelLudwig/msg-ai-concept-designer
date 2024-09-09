@@ -202,21 +202,22 @@ def save_sessionstate_to_json():
         mime="application/json"
     )
 
-
 # Download-Button anzeigen
 save_sessionstate_to_json()
 
-#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
+#-------Sessionstate setzen wenn Projekt importiert wurde -------------------
 def upload_sessionstate_from_json(uploaded_file):
     if uploaded_file is not None:
         # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
         st.session_state.update(session_dict)
-        st.success("Projekt wurde eingelesen! Bitte unten links auf das x neben der Datei klicken um diese zu entfernen und die Seite neu zu laden!")
+        st.success("Projekt wurde eingelesen! Die Seite wird nun neu geladen.")
+        st.experimental_rerun()
 
 # JSON-Datei hochladen
 uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
 
 # Button zum Hochladen und SessionState aktualisieren
 if uploaded_file is not None:
-    upload_sessionstate_from_json(uploaded_file)
+    if st.sidebar.button("Projekt laden"):
+        upload_sessionstate_from_json(uploaded_file)
