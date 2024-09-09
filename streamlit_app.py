@@ -165,9 +165,11 @@ def create_colored_toc():
         if has_content:
             color = "#d4edda"  # Grün (success)
             border_color = "#c3e6cb"
+            checkmark = "✓"  # Grünes Häkchen
         else:
             color = "#cce5ff"  # Blau (info)
             border_color = "#b8daff"
+            checkmark = ""  # Kein Häkchen
         
         # HTML für farbigen Link erstellen
         colored_link = f"""
@@ -176,13 +178,21 @@ def create_colored_toc():
             border: 1px solid {border_color};
             border-radius: 5px;
             padding: 5px;
-            margin: 2px 0;">
+            margin: 2px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;">
             <a href="#{anchor}" style="
                 color: #333;
                 text-decoration: none;
                 font-weight: bold;">
                 {title_text}
             </a>
+            <span style="
+                color: #28a745;
+                font-weight: bold;">
+                {checkmark}
+            </span>
         </div>
         """
         
