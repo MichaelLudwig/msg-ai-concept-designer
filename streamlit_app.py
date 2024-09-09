@@ -106,54 +106,7 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
         word_export.export_dokument_to_word(st.session_state.new_title, st.session_state.new_header, st.session_state.toc_list, st.session_state.kapitel_inhalt, st.session_state.glossar)
 
 
-#Schaltflächen für den Export und import des aktuellen Bearbeitungsstands
-st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
-
-# Funktion zum Speichern des SessionState in JSON und Download anbieten
-def save_sessionstate_to_json():
-    # SessionState in ein JSON-kompatibles Format umwandeln
-    session_dict = {k: v for k, v in st.session_state.items() if v not in [False, True]}
-    
-    # JSON in einen BytesIO-Stream schreiben
-    json_str = json.dumps(session_dict, indent=4)
-    json_bytes = json_str.encode('utf-8')
-    json_io = io.BytesIO(json_bytes)
-    
-    # Download-Button anzeigen
-    st.sidebar.download_button(
-        label="Aktuelles Projekt in Datei speichern",
-        data=json_io,
-        file_name="session_state.json",
-        mime="application/json"
-    )
-
-# Download-Button anzeigen
-save_sessionstate_to_json()
-
-#-------Sessionstate setzen wenn Projekt importiert wurde -------------------
-def upload_sessionstate_from_json(uploaded_file):
-    if uploaded_file is not None:
-        # JSON-Daten lesen und in den SessionState schreiben
-        session_dict = json.load(uploaded_file)
-        for key, value in session_dict.items():
-            if key not in st.session_state:
-                st.session_state[key] = value
-        st.session_state.project_loaded = True
-        return True
-    return False
-
-# JSON-Datei hochladen
-uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json", key="project_uploader")
-
-# Automatisch Projekt laden, wenn eine Datei hochgeladen wurde
-if uploaded_file is not None and 'project_loaded' not in st.session_state:
-    if upload_sessionstate_from_json(uploaded_file):
-        st.sidebar.success("Projekt wurde erfolgreich geladen. Die Seite wird automatisch aktualisiert.")
-        st.session_state.project_uploader = None  # Reset file uploader
-
-# Überprüfen, ob ein Projekt geladen wurde und die Seite aktualisieren
-if 'project_loaded' in st.session_state and st.session_state.project_loaded:
-    del st.session_state.project_loaded
+#Schaltflächen zum Speichern des aktuellen Projektes
 
 
 
@@ -225,3 +178,45 @@ if 'glossar' in st.session_state:
 
 #if "toc_list" in st.session_state:
     #st.write(st.session_state.toc_list)
+
+
+
+#Schaltflächen für den Export und import des aktuellen Bearbeitungsstands
+st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
+
+# Funktion zum Speichern des SessionState in JSON und Download anbieten
+def save_sessionstate_to_json():
+    # SessionState in ein JSON-kompatibles Format umwandeln
+    session_dict = {k: v for k, v in st.session_state.items() if v not in [False, True]}
+    
+    # JSON in einen BytesIO-Stream schreiben
+    json_str = json.dumps(session_dict, indent=4)
+    json_bytes = json_str.encode('utf-8')
+    json_io = io.BytesIO(json_bytes)
+    
+    # Download-Button anzeigen
+    st.sidebar.download_button(
+        label="Aktuelles Projekt in Datei speichern",
+        data=json_io,
+        file_name="session_state.json",
+        mime="application/json"
+    )
+
+# Download-Button anzeigen
+save_sessionstate_to_json()
+
+#-------Sessionstate setzen wenn Projekt importiert wurde -------------------
+def upload_sessionstate_from_json(uploaded_file):
+    if uploaded_file is not None:
+        # JSON-Daten lesen und in den SessionState schreiben
+        session_dict = json.load(uploaded_file)
+        st.session_state.update(session_dict)
+        st.success("Projekt wurde eingelesen! Bitte unten links auf das x neben der Datei klicken um diese zu entfernen und die Seite neu zu laden!")
+
+# JSON-Datei hochladen
+uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
+
+# Button zum Hochladen und SessionState aktualisieren
+if uploaded_file is not None:
+    if st.sidebar.button("Projekt laden"):
+        upload_sessionstate_from_json(uploaded_file)
