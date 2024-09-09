@@ -215,9 +215,15 @@ if 'glossar' in st.session_state:
     st.header("Glossar")
 
     if st.session_state.glossar == "":
-        st.write("Zur Erstellung des Glossars bitte die Schaltfläche im Navigationsbereich im Bereich Word Export benutzen.")
-    
-    st.write(st.session_state.glossar)
+        st.info("""
+        **Hinweis zur Erstellung des Glossars:**
+        
+        Um ein Glossar zu erstellen, verwenden Sie bitte die Schaltfläche "Glossar (re)generieren" im Bereich "Word Export" in der Seitenleiste.
+        
+        Sobald das Glossar generiert wurde, wird es hier angezeigt.
+        """)
+    else:
+        st.write(st.session_state.glossar)
 
 #if "toc_list" in st.session_state:
     #st.write(st.session_state.toc_list)
