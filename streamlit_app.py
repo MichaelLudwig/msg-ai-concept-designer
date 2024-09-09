@@ -169,7 +169,7 @@ def create_colored_toc():
         else:
             color = "#cce5ff"  # Blau (info)
             border_color = "#b8daff"
-            checkmark = ""  # Kein Häkchen
+            checkmark = " "  # Kein Häkchen
         
         # HTML für farbigen Link erstellen
         colored_link = f"""
