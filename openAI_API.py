@@ -22,7 +22,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
                 "name": "generate_toc",
                 "description": "Generates a nummerated table of contents with description for a given topic",
                 "parameters": {
-                    "type": "object",
+                    "type": "object",                    
                     "properties": {
                         "toc": {
                             "type": "array",
