@@ -218,5 +218,4 @@ uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei ein
 
 # Button zum Hochladen und SessionState aktualisieren
 if uploaded_file is not None:
-    if st.sidebar.button("Projekt laden"):
-        upload_sessionstate_from_json(uploaded_file)
+    upload_sessionstate_from_json(uploaded_file)
