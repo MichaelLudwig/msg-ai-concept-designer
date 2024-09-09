@@ -232,22 +232,15 @@ st.sidebar.subheader("Projekt Speichern oder Laden", divider='grey')
 
 # Funktion zum Speichern des SessionState in JSON und Download anbieten
 def save_sessionstate_to_json():
-    def serialize(obj):
-        if isinstance(obj, (int, float, str, bool, type(None))):
-            return obj
-        elif isinstance(obj, list):
-            return [serialize(item) for item in obj]
-        elif isinstance(obj, dict):
-            return {key: serialize(value) for key, value in obj.items()}
-        else:
-            return str(obj)
-
-    session_dict = {k: serialize(v) for k, v in st.session_state.items() if not k.startswith('_')}
+    # SessionState in ein JSON-kompatibles Format umwandeln
+    session_dict = {k: v for k, v in st.session_state.items() if v not in [False, True]}
     
+    # JSON in einen BytesIO-Stream schreiben
     json_str = json.dumps(session_dict, indent=4)
     json_bytes = json_str.encode('utf-8')
     json_io = io.BytesIO(json_bytes)
     
+    # Download-Button anzeigen
     st.sidebar.download_button(
         label="Aktuelles Projekt in Datei speichern",
         data=json_io,
@@ -255,37 +248,21 @@ def save_sessionstate_to_json():
         mime="application/json"
     )
 
+
 # Download-Button anzeigen
 save_sessionstate_to_json()
 
-#-------Sessionstate setzen wenn Projekt importiert wurde -------------------
+#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
 def upload_sessionstate_from_json(uploaded_file):
     if uploaded_file is not None:
+        # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
-        for key, value in session_dict.items():
-            if key not in st.session_state:
-                st.session_state[key] = value
-        return True
-    return False
+        st.session_state.update(session_dict)
+        st.success("Projekt wurde eingelesen! Bitte unten links auf das x neben der Datei klicken um diese zu entfernen und die Seite neu zu laden!")
 
 # JSON-Datei hochladen
-uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json", key="project_uploader")
+uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
 
-# Automatisch Projekt laden, wenn eine Datei hochgeladen wurde
-if uploaded_file is not None and 'project_loaded' not in st.session_state:
-    if upload_sessionstate_from_json(uploaded_file):
-        st.sidebar.success("Projekt wurde erfolgreich geladen.")
-        st.warning("""
-        **Wichtiger Hinweis:**
-        
-        Bitte klicken Sie unten links auf das **X** neben der Datei, um diese zu entfernen und die Seite neu zu laden!
-        
-        Erst dann werden alle geladenen Informationen korrekt angezeigt.
-        """)
-        st.session_state.project_loaded = True
-
-# Überprüfen, ob ein Projekt geladen wurde und die Seite aktualisieren
-if 'project_loaded' in st.session_state and st.session_state.project_loaded:
-    del st.session_state.project_loaded
-    #st.experimental_rerun()
-
+# Button zum Hochladen und SessionState aktualisieren
+if uploaded_file is not None:
+    upload_sessionstate_from_json(uploaded_file)
