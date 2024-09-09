@@ -178,7 +178,10 @@ def create_colored_toc():
             border: 1px solid {border_color};
             border-radius: 5px;
             padding: 5px;
-            margin: 2px 0;">
+            margin: 2px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;">
             <a href="#{anchor}" style="
                 color: #333;
                 text-decoration: none;
