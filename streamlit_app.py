@@ -287,5 +287,5 @@ if uploaded_file is not None and 'project_loaded' not in st.session_state:
 # Überprüfen, ob ein Projekt geladen wurde und die Seite aktualisieren
 if 'project_loaded' in st.session_state and st.session_state.project_loaded:
     del st.session_state.project_loaded
-    st.experimental_rerun()
+    #st.experimental_rerun()
 
