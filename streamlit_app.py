@@ -266,6 +266,7 @@ def upload_sessionstate_from_json(uploaded_file):
         
         Erst dann werden alle geladenen Informationen korrekt angezeigt.
         """)
+    st.sidebar.write("upload_sessionstate ausgeführt")
 
 # JSON-Datei hochladen
 uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
