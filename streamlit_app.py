@@ -171,7 +171,7 @@ def create_colored_toc():
             color = "#cce5ff"  # Blau (info)
             border_color = "#b8daff"
             icon = "!"  # Ausrufezeichen
-            icon_color = "#ffc107"  # Gelb (warning)
+            icon_color = "#007bff"  # Blau
         
         # HTML für farbigen Link erstellen
         colored_link = f"""
