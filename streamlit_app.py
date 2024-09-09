@@ -269,7 +269,7 @@ def upload_sessionstate_from_json(uploaded_file):
 # JSON-Datei hochladen
 uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
 
-# Button zum Hochladen und SessionState aktualisieren
+
 if uploaded_file is not None:
     upload_sessionstate_from_json(uploaded_file)
 
