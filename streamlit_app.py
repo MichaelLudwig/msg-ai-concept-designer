@@ -141,12 +141,45 @@ def generate_anchor(text):
     text = re.sub(r'\W+', '-', text.lower()).strip('-')
     return text
 
-# Inhaltsverzeichnis mit Links zu Kapiteln erstellen
-st.subheader("Inhaltsverzeichnis")
-for i, item in enumerate(st.session_state.toc_list):
-    title_text = item["title"]
-    anchor = generate_anchor(title_text)
-    st.markdown(f"- [{title_text}](#{anchor})")
+# Funktion zur Erstellung des farbigen Inhaltsverzeichnisses
+def create_colored_toc():
+    st.subheader("Inhaltsverzeichnis")
+    
+    for i, item in enumerate(st.session_state.toc_list):
+        title_text = item["title"]
+        anchor = generate_anchor(title_text)
+        
+        # Überprüfen, ob Inhalt für dieses Kapitel vorhanden ist
+        has_content = st.session_state.kapitel_inhalt[i].strip() != ""
+        
+        if has_content:
+            color = "#d4edda"  # Grün (success)
+            border_color = "#c3e6cb"
+        else:
+            color = "#cce5ff"  # Blau (info)
+            border_color = "#b8daff"
+        
+        # HTML für farbigen Link erstellen
+        colored_link = f"""
+        <div style="
+            background-color: {color};
+            border: 1px solid {border_color};
+            border-radius: 5px;
+            padding: 5px;
+            margin: 2px 0;">
+            <a href="#{anchor}" style="
+                color: #333;
+                text-decoration: none;
+                font-weight: bold;">
+                {title_text}
+            </a>
+        </div>
+        """
+        
+        st.markdown(colored_link, unsafe_allow_html=True)
+
+# Inhaltsverzeichnis erstellen
+create_colored_toc()
 
 # Erstellen der Webseiten-Struktur mit Überschriften, Infoboxen und Textboxen
 for i, item in enumerate(st.session_state.toc_list):
