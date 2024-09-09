@@ -54,21 +54,21 @@ st.sidebar.title("App-Steuerung")
 st.sidebar.subheader("Neues Dokument", divider='grey')
 newdoc_form = st.sidebar.form("newdoc_form_key")
 st.session_state.new_title = newdoc_form.text_input("Dokumenttitel", value=st.session_state.new_title, help="Der Titel, den das Dokument haben soll")
+
+document_types = ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
+    "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
+    "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
+    "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
+    "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
+    "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
+    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"]
+
+default_index = document_types.index(st.session_state.new_doctype) if st.session_state.new_doctype in document_types else 0
+
 st.session_state.new_doctype = newdoc_form.selectbox("Dokumenttyp", 
-    ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
-    "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
-    "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
-    "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
-    "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
-    "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
-    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"],
-    index=["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
-    "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
-    "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
-    "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
-    "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
-    "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
-    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"].index(st.session_state.new_doctype))
+    options=document_types,
+    index=default_index)
+
 st.session_state.new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt", value=st.session_state.new_content_focus, help="Nenne alle Aspekte, die im Dokument zwingend behandelt werden sollen. Sie werden nach Themen geclustert und im Output z.b. in Form von Kapiteln erscheinen")
 st.session_state.new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=st.session_state.new_chapter_count)
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
@@ -78,7 +78,16 @@ new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 st.sidebar.subheader("Kapitel Steuerelemente", divider='grey')  
 #st.sidebar.markdown(f"[Zurück zum Inhaltsverzeichnis](#inhaltsverzeichnis)")
 st.session_state.new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=1000, value=st.session_state.new_word_count, step=50)
-st.session_state.new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"], index=["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"].index(st.session_state.new_writing_style))
+
+writing_styles = ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"]
+default_style_index = writing_styles.index(st.session_state.new_writing_style) if st.session_state.new_writing_style in writing_styles else 0
+
+st.session_state.new_writing_style = st.sidebar.selectbox(
+    "Wähle den Schreibstil.",
+    options=writing_styles,
+    index=default_style_index
+)
+
 if st.session_state.new_writing_style == "msg Konzept":
     st.session_state.new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."        
 st.session_state.new_context = st.sidebar.text_area("Kontext", value=st.session_state.new_context, help="Nenne hier Dinge wie Branche und Größe des Kunden, vorhandene Infrastruktur (keine sensiblen Daten!), Ziel des Konzepts, etc.")
