@@ -194,26 +194,12 @@ for i, item in enumerate(st.session_state.toc_list):
     st.header(title_text)
     
     st.info(st.session_state.kapitel_info[i])
-    st.session_state.kapitel_prompt[i] = st.text_area(
-        f"Prompt zum generieren des Inhalts", 
-        value=st.session_state.kapitel_prompt[i], 
-        height=100, 
-        key=f"prompt_{i}",
-        on_change=update_session_state,
-        args=(f'kapitel_prompt_{i}', st.session_state.kapitel_prompt[i])
-    )
+    st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
     
     if st.button("Kapitel " + title_text + " generieren", key=f"button_chapter_{i}"):
         openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], st.session_state.new_doctype, st.session_state.new_title, st.session_state.new_writing_style, st.session_state.new_word_count, st.session_state.new_context, st.session_state.new_stakeholder, i)
     
-    st.session_state.kapitel_inhalt[i] = st.text_area(
-        f"Textbaustein für {title_text}", 
-        value=st.session_state.kapitel_inhalt[i], 
-        height=300, 
-        key=f"inhalt_{i}",
-        on_change=update_session_state,
-        args=(f'kapitel_inhalt_{i}', st.session_state.kapitel_inhalt[i])
-    )
+    st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
 
 if 'glossar' in st.session_state:
     st.header("Glossar")
@@ -266,7 +252,7 @@ def upload_sessionstate_from_json(uploaded_file):
         
         Erst dann werden alle geladenen Informationen korrekt angezeigt.
         """)
-    st.sidebar.write("upload_sessionstate ausgeführt")
+    
 
 # JSON-Datei hochladen
 uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
@@ -274,4 +260,4 @@ uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei ein
 # Button zum Hochladen und SessionState aktualisieren
 if uploaded_file is not None:
     upload_sessionstate_from_json(uploaded_file)
-    st.sidebar.write("upload_file ausgeführt")
+    
