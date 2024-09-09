@@ -181,6 +181,10 @@ def create_colored_toc():
 # Inhaltsverzeichnis erstellen
 create_colored_toc()
 
+# Funktion zum Aktualisieren des Session States
+def update_session_state(key, value):
+    st.session_state[key] = value
+
 # Erstellen der Webseiten-Struktur mit Überschriften, Infoboxen und Textboxen
 for i, item in enumerate(st.session_state.toc_list):
     title_text = st.session_state.kapitel_header[i]
@@ -190,12 +194,26 @@ for i, item in enumerate(st.session_state.toc_list):
     st.header(title_text)
     
     st.info(st.session_state.kapitel_info[i])
-    st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100, key=f"prompt_{i}")
+    st.session_state.kapitel_prompt[i] = st.text_area(
+        f"Prompt zum generieren des Inhalts", 
+        value=st.session_state.kapitel_prompt[i], 
+        height=100, 
+        key=f"prompt_{i}",
+        on_change=update_session_state,
+        args=(f'kapitel_prompt_{i}', st.session_state.kapitel_prompt[i])
+    )
     
     if st.button("Kapitel " + title_text + " generieren", key=f"button_chapter_{i}"):
         openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], st.session_state.new_doctype, st.session_state.new_title, st.session_state.new_writing_style, st.session_state.new_word_count, st.session_state.new_context, st.session_state.new_stakeholder, i)
     
-    st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300, key=f"inhalt_{i}")
+    st.session_state.kapitel_inhalt[i] = st.text_area(
+        f"Textbaustein für {title_text}", 
+        value=st.session_state.kapitel_inhalt[i], 
+        height=300, 
+        key=f"inhalt_{i}",
+        on_change=update_session_state,
+        args=(f'kapitel_inhalt_{i}', st.session_state.kapitel_inhalt[i])
+    )
 
 if 'glossar' in st.session_state:
     st.header("Glossar")
@@ -239,7 +257,17 @@ def upload_sessionstate_from_json(uploaded_file):
         # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
         st.session_state.update(session_dict)
-        st.success("Projekt wurde eingelesen!")
+        st.session_state.project_loaded = True
+        return True
+    return False
+
+# JSON-Datei hochladen
+uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json", key="project_uploader")
+
+# Automatisch Projekt laden, wenn eine Datei hochgeladen wurde
+if uploaded_file is not None and 'project_loaded' not in st.session_state:
+    if upload_sessionstate_from_json(uploaded_file):
+        st.sidebar.success("Projekt wurde erfolgreich geladen.")
         st.warning("""
         **Wichtiger Hinweis:**
         
@@ -247,11 +275,9 @@ def upload_sessionstate_from_json(uploaded_file):
         
         Erst dann werden alle geladenen Informationen korrekt angezeigt.
         """)
+        st.session_state.project_uploader = None  # Reset file uploader
 
-# JSON-Datei hochladen
-uploaded_file = st.sidebar.file_uploader("Bestehendes Projekt per JSON Datei einlesen", type="json")
-
-# Button zum Hochladen und SessionState aktualisieren
-if uploaded_file is not None:
-    upload_sessionstate_from_json(uploaded_file)
+# Überprüfen, ob ein Projekt geladen wurde und die Seite aktualisieren
+if 'project_loaded' in st.session_state and st.session_state.project_loaded:
+    del st.session_state.project_loaded
 
