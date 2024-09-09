@@ -252,7 +252,6 @@ def save_sessionstate_to_json():
     json_bytes = json_str.encode('utf-8')
     json_io = io.BytesIO(json_bytes)
     
-    # Download-Button anzeigen
     st.sidebar.download_button(
         label="Aktuelles Projekt in Datei speichern",
         data=json_io,
@@ -260,14 +259,12 @@ def save_sessionstate_to_json():
         mime="application/json"
     )
 
-
 # Download-Button anzeigen
 save_sessionstate_to_json()
 
-#-------Sessionstate setzen wenn Projekt impoortiert wurde -------------------
+#-------Sessionstate setzen wenn Projekt importiert wurde -------------------
 def upload_sessionstate_from_json(uploaded_file):
     if uploaded_file is not None:
-        # JSON-Daten lesen und in den SessionState schreiben
         session_dict = json.load(uploaded_file)
         st.session_state.update(session_dict)
         st.success("Projekt wurde eingelesen!")
