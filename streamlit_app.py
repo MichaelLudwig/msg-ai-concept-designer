@@ -6,25 +6,45 @@ import json
 import re
 import unicodedata
 
- 
+# Funktion zum Initialisieren der session_state Variablen
+def initialize_session_state():
+    if 'new_title' not in st.session_state:
+        st.session_state.new_title = ""
+    if 'new_header' not in st.session_state:
+        st.session_state.new_header = ""
+    if 'new_content_focus' not in st.session_state:
+        st.session_state.new_content_focus = ""
+    if 'new_doctype' not in st.session_state:
+        st.session_state.new_doctype = "Fachkonzept"
+    if 'new_chapter_count' not in st.session_state:
+        st.session_state.new_chapter_count = 8
+    if 'new_word_count' not in st.session_state:
+        st.session_state.new_word_count = 100
+    if 'new_writing_style' not in st.session_state:
+        st.session_state.new_writing_style = "msg Konzept"
+    if 'new_context' not in st.session_state:
+        st.session_state.new_context = ""
+    if 'new_stakeholder' not in st.session_state:
+        st.session_state.new_stakeholder = "Technisches Fachpersonal"
+    if 'toc_list' not in st.session_state:
+        st.session_state.toc_list = []
+    if 'kapitel_header' not in st.session_state:
+        st.session_state.kapitel_header = []
+    if 'kapitel_info' not in st.session_state:
+        st.session_state.kapitel_info = []
+    if 'kapitel_inhalt' not in st.session_state:
+        st.session_state.kapitel_inhalt = []
+    if 'kapitel_prompt' not in st.session_state:
+        st.session_state.kapitel_prompt = []
+    if 'glossar' not in st.session_state:
+        st.session_state.glossar = ""
 
-        
+# Initialisiere session_state
+initialize_session_state()
 
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
 #main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
-
-
-#--Sessionstate Handling ---------------------------------------------------------------------------------------------------------------------------------------
-if 'new_title' not in st.session_state:
-    st.session_state.new_title = ""
-if 'new_header' not in st.session_state:
-    st.session_state.new_header = ""
-if 'toc_list' in st.session_state:
-    toc_list=st.session_state.toc_list
-else:
-    toc_list=[]
-
 
 
 #--Sidebar ---------------------------------------------------------------------------------------------------------------------------------------
@@ -33,33 +53,36 @@ st.sidebar.title("App-Steuerung")
 #Schaltflächen für neues Dokument
 st.sidebar.subheader("Neues Dokument", divider='grey')
 newdoc_form = st.sidebar.form("newdoc_form_key")
-st.session_state.new_title = newdoc_form.text_input("Dokumenttitel", help="Der Titel, den das Dokument haben soll")
-new_doctype = newdoc_form.selectbox("Dokumenttyp",
+st.session_state.new_title = newdoc_form.text_input("Dokumenttitel", value=st.session_state.new_title, help="Der Titel, den das Dokument haben soll")
+st.session_state.new_doctype = newdoc_form.selectbox("Dokumenttyp", 
     ["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
-    # "Marktanalyse",
     "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
     "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
-    #"Datenschutzkonzept", "Datenschutzerklärung", "Schutzbedarfsfeststellung (nach BSI Grundschutz)", "Auftragsverarbeitungs-Vertrag", "Verzeichnis von Verarbeitungstätigkeiten", "Datenschutzfolgeabschätzung",
     "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
     "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
     "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
-    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"])
-if 'new_content_focus' not in st.session_state:
-    st.session_state.new_content_focus = ""
+    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"],
+    index=["Fachkonzept", "IT-Konzept", "Anforderungskonzept", 
+    "Architekturkonzept", "Infrastrukturkonzept", "Migrationskonzept", "Deploymentkonzept", "Testkonzept", "Backupkonzept", "Schnittstellenkonzept", 
+    "Sicherheitskonzept", "Rollen- und Rechtekonzept",  
+    "Changemanagementkonzept", "Löschkonzept", "Verschlüsselungskonzept", "Datensicherungskonzept", 
+    "Betriebsführungskonzept", "Betriebsführungshandbuch", "Notfallkonzept", 
+    "Dokumentationskonzept", "Risikomanagementkonzept", "Compliancekonzept", "Qualitätsmanagementkonzept",
+    "Schulungskonzept", "Kommunikationskonzept", "Benutzerhandbuch"].index(st.session_state.new_doctype))
 st.session_state.new_content_focus = newdoc_form.text_area("Inhaltlicher Schwerpunkt", value=st.session_state.new_content_focus, help="Nenne alle Aspekte, die im Dokument zwingend behandelt werden sollen. Sie werden nach Themen geclustert und im Output z.b. in Form von Kapiteln erscheinen")
-new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=8)
+st.session_state.new_chapter_count = newdoc_form.slider("Anzahl der Kapitel.", min_value=1, max_value=30, value=st.session_state.new_chapter_count)
 new_submitted = newdoc_form.form_submit_button("Dokumentstruktur erstellen")
 
 
 #Schaltflächen für die Kapitelbearbeitung 
 st.sidebar.subheader("Kapitel Steuerelemente", divider='grey')  
 #st.sidebar.markdown(f"[Zurück zum Inhaltsverzeichnis](#inhaltsverzeichnis)")
-new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=1000, value=100, step=50)
-new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"])
-if new_writing_style == "msg Konzept":
-    new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."        
-new_context = st.sidebar.text_area("Kontext", help="Nenne hier Dinge wie Branche und Größe des Kunden, vorhandene Infrastruktur (keine sensiblen Daten!), Ziel des Konzepts, etc.")
-new_stakeholder = st.sidebar.text_input("Zielgruppe", value="Technisches Fachpersonal", help="Beschreibe die Leserschaft deines Dokuments, z.b. Admins, Management, C-Level, fachliche Leitung, etc.")
+st.session_state.new_word_count = st.sidebar.slider("Anzahl der Wörter pro Kapitel.", min_value=50, max_value=1000, value=st.session_state.new_word_count, step=50)
+st.session_state.new_writing_style = st.sidebar.selectbox("Wähle den Schreibstil.", ["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"], index=["msg Konzept", "Fachlich", "Technisch", "Akademisch", "Sarkastisch"].index(st.session_state.new_writing_style))
+if st.session_state.new_writing_style == "msg Konzept":
+    st.session_state.new_writing_style = "Schreibe den Text in einem formalen und strukturierten Stil, wie es in Konzepten üblich ist. Verwende präzise und sachliche Sprache mit klaren, kurzen Sätzen. Es wird eine objektive und distanzierte Haltung eingenommen. Der Text verzichtet auf persönliche Ansprache oder emotionalen Ausdruck und konzentriert sich stattdessen auf klare Darstellung von Informationen und Anweisungen. Der Text soll in der dritten Person Singular und im Präsens geschrieben sein."        
+st.session_state.new_context = st.sidebar.text_area("Kontext", value=st.session_state.new_context, help="Nenne hier Dinge wie Branche und Größe des Kunden, vorhandene Infrastruktur (keine sensiblen Daten!), Ziel des Konzepts, etc.")
+st.session_state.new_stakeholder = st.sidebar.text_input("Zielgruppe", value=st.session_state.new_stakeholder, help="Beschreibe die Leserschaft deines Dokuments, z.b. Admins, Management, C-Level, fachliche Leitung, etc.")
 
 
 #Schaltflächen für den Word Export
@@ -86,19 +109,18 @@ if new_submitted:
     # Überschriften für Hauptbereich aus Parametern erzeugen
     #st.header(new_doctype + ": " + new_title, divider='grey')    
     #st.session_state.new_title = new_title
-    st.session_state.new_header = new_doctype + ": " + st.session_state.new_title
+    st.session_state.new_header = st.session_state.new_doctype + ": " + st.session_state.new_title
 
     with st.spinner(text="Inhaltsverzeichnis wird erstellt ..."):
 
     #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
-        toc_list = openAI_API.generate_toc(new_doctype, st.session_state.new_title, st.session_state.new_content_focus, new_chapter_count)
+        st.session_state.toc_list = openAI_API.generate_toc(st.session_state.new_doctype, st.session_state.new_title, st.session_state.new_content_focus, st.session_state.new_chapter_count)
     
     #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
-    st.session_state.toc_list = toc_list
-    st.session_state.kapitel_header = [""] * len(toc_list)
-    st.session_state.kapitel_info = [""] * len(toc_list)
-    st.session_state.kapitel_inhalt = [""] * len(toc_list)
-    st.session_state.kapitel_prompt = [""] * len(toc_list)
+    st.session_state.kapitel_header = [""] * len(st.session_state.toc_list)
+    st.session_state.kapitel_info = [""] * len(st.session_state.toc_list)
+    st.session_state.kapitel_inhalt = [""] * len(st.session_state.toc_list)
+    st.session_state.kapitel_prompt = [""] * len(st.session_state.toc_list)
     # st.session_state.prompt_area = [""] * len(toc_list)
     st.session_state.glossar = ""
 
@@ -137,24 +159,26 @@ for i, item in enumerate(st.session_state.toc_list):
     st.header(title_text)
     
     #Inhalte aus generierten Kapitelverzeichnis in SessionState nachhalten damit sie beim reload erhalten bleiben
-    if st.session_state.kapitel_info[i] == "":
-        st.session_state.kapitel_info[i] = help_text
+    if len(st.session_state.kapitel_info) <= i:
+        st.session_state.kapitel_info.append(help_text)
     
-    if st.session_state.kapitel_prompt[i] == "":
-        st.session_state.kapitel_prompt[i] = prompt_text
-
+    if len(st.session_state.kapitel_prompt) <= i:
+        st.session_state.kapitel_prompt.append(prompt_text)
+    
+    if len(st.session_state.kapitel_inhalt) <= i:
+        st.session_state.kapitel_inhalt.append("")
+    
     #Aufbau der Seitenkomponente für jedes Kapitel
     #Titel
     st.info(st.session_state.kapitel_info[i])
-    st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
+    st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100, key=f"prompt_{i}")
     
     #Schaltfläche um die Kapitelinhalte zu generieren
-    if st.button("Kapitel " + title_text + " generieren", key="button_chapter_" + str(i)):
-        #prompt_text = st.session_state.prompt_area[i]
-        openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], new_doctype, st.session_state.new_title, new_writing_style, new_word_count, new_context, new_stakeholder, i)
+    if st.button("Kapitel " + title_text + " generieren", key=f"button_chapter_{i}"):
+        openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], st.session_state.new_doctype, st.session_state.new_title, st.session_state.new_writing_style, st.session_state.new_word_count, st.session_state.new_context, st.session_state.new_stakeholder, i)
 
     #Kapitelinhalt Sessionstate anpassen, so dass Änderungen in der Textbox nachgehalten werden und nicht durch den zuvor generierten Inhaltstext beim Page-reload überschrieben werden           
-    st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300)
+    st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300, key=f"inhalt_{i}")
 
 if 'glossar' in st.session_state:
     st.header("Glossar")
