@@ -144,6 +144,16 @@ def generate_anchor(text):
 # Funktion zur Erstellung des farbigen Inhaltsverzeichnisses
 def create_colored_toc():
     st.subheader("Inhaltsverzeichnis")
+
+    if not st.session_state.toc_list:
+        st.info("""
+        **Hinweis zur Erstellung des Inhaltsverzeichnisses:**
+        
+        Um ein Inhaltsverzeichnis zu erstellen, füllen Sie bitte die Felder im Bereich "Neues Dokument" in der Seitenleiste aus und klicken Sie dann auf "Dokumentstruktur erstellen".
+        
+        Sobald die Dokumentstruktur generiert wurde, wird hier das Inhaltsverzeichnis angezeigt.
+        """)
+        return
     
     for i, item in enumerate(st.session_state.toc_list):
         title_text = item["title"]
