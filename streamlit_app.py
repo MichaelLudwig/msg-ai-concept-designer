@@ -116,21 +116,17 @@ if st.sidebar.button("Word Dokument generieren", key="word_export"):
 if new_submitted:
     
     # Überschriften für Hauptbereich aus Parametern erzeugen
-    #st.header(new_doctype + ": " + new_title, divider='grey')    
-    #st.session_state.new_title = new_title
     st.session_state.new_header = st.session_state.new_doctype + ": " + st.session_state.new_title
 
     with st.spinner(text="Inhaltsverzeichnis wird erstellt ..."):
-
-    #Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
+        # Inhaltsverzeichnis + Infotexte + Prompts aus Paramtetern per Chatbot erzeugen
         st.session_state.toc_list = openAI_API.generate_toc(st.session_state.new_doctype, st.session_state.new_title, st.session_state.new_content_focus, st.session_state.new_chapter_count)
     
-    #Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden, die über die gesamte Session erhalen bleiben sollen (da häufige Page Reloads)
-    st.session_state.kapitel_header = [""] * len(st.session_state.toc_list)
-    st.session_state.kapitel_info = [""] * len(st.session_state.toc_list)
+    # Leere SessionState Elemente erzeugen die im Weiteren mit Inhalten gefüllt werden
+    st.session_state.kapitel_header = [item["title"] for item in st.session_state.toc_list]
+    st.session_state.kapitel_info = [item["help_text"] for item in st.session_state.toc_list]
+    st.session_state.kapitel_prompt = [item["prompt_text"] for item in st.session_state.toc_list]
     st.session_state.kapitel_inhalt = [""] * len(st.session_state.toc_list)
-    st.session_state.kapitel_prompt = [""] * len(st.session_state.toc_list)
-    # st.session_state.prompt_area = [""] * len(toc_list)
     st.session_state.glossar = ""
 
     
@@ -158,35 +154,18 @@ for i, item in enumerate(st.session_state.toc_list):
 
 # Erstellen der Webseiten-Struktur mit Überschriften, Infoboxen und Textboxen
 for i, item in enumerate(st.session_state.toc_list):
-    title_text = item["title"]
-    help_text= item["help_text"]
-    prompt_text= item["prompt_text"]
+    title_text = st.session_state.kapitel_header[i]
     anchor = generate_anchor(title_text)
     
-    # Verwende st.markdown mit HTML, um einen benutzerdefinierten Anker zu setzen
     st.markdown(f'<a name="{anchor}"></a>', unsafe_allow_html=True)
     st.header(title_text)
     
-    #Inhalte aus generierten Kapitelverzeichnis in SessionState nachhalten damit sie beim reload erhalten bleiben
-    if len(st.session_state.kapitel_info) <= i:
-        st.session_state.kapitel_info.append(help_text)
-    
-    if len(st.session_state.kapitel_prompt) <= i:
-        st.session_state.kapitel_prompt.append(prompt_text)
-    
-    if len(st.session_state.kapitel_inhalt) <= i:
-        st.session_state.kapitel_inhalt.append("")
-    
-    #Aufbau der Seitenkomponente für jedes Kapitel
-    #Titel
     st.info(st.session_state.kapitel_info[i])
     st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100, key=f"prompt_{i}")
     
-    #Schaltfläche um die Kapitelinhalte zu generieren
     if st.button("Kapitel " + title_text + " generieren", key=f"button_chapter_{i}"):
         openAI_API.generate_chapter(title_text, st.session_state.kapitel_prompt[i], st.session_state.new_doctype, st.session_state.new_title, st.session_state.new_writing_style, st.session_state.new_word_count, st.session_state.new_context, st.session_state.new_stakeholder, i)
-
-    #Kapitelinhalt Sessionstate anpassen, so dass Änderungen in der Textbox nachgehalten werden und nicht durch den zuvor generierten Inhaltstext beim Page-reload überschrieben werden           
+    
     st.session_state.kapitel_inhalt[i] = st.text_area(f"Textbaustein für {title_text}", value=st.session_state.kapitel_inhalt[i], height=300, key=f"inhalt_{i}")
 
 if 'glossar' in st.session_state:
