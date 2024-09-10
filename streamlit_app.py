@@ -232,6 +232,8 @@ if 'glossar' in st.session_state:
         
         Um ein Glossar zu erstellen, verwenden Sie bitte die Schaltfläche "Glossar (re)generieren" im Bereich "Word Export" in der Seitenleiste.
         
+        Ein Glossar kann erst generiert werden, wenn in den jeweiligen Kapitel Inhalte generiert wurden.
+
         Sobald das Glossar generiert wurde, wird es hier angezeigt.
         """)
     else:
