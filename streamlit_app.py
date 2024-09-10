@@ -200,6 +200,9 @@ def create_colored_toc():
         
         st.markdown(colored_link, unsafe_allow_html=True)
 
+# Füge einen Anker für das Inhaltsverzeichnis hinzu
+st.markdown('<a name="inhaltsverzeichnis"></a>', unsafe_allow_html=True)
+
 # Inhaltsverzeichnis erstellen
 create_colored_toc()
 
@@ -213,7 +216,16 @@ for i, item in enumerate(st.session_state.toc_list):
     anchor = generate_anchor(title_text)
     
     st.markdown(f'<a name="{anchor}"></a>', unsafe_allow_html=True)
-    st.header(title_text)
+    
+    # Erstelle die Überschrift mit dem "Zurück zum Inhaltsverzeichnis" Icon
+    st.markdown(f"""
+    <h2 style="display: flex; justify-content: space-between; align-items: center;">
+        {title_text}
+        <a href="#inhaltsverzeichnis" style="text-decoration: none; color: inherit; font-size: 0.8em;">
+            &#128196; Zum Inhaltsverzeichnis
+        </a>
+    </h2>
+    """, unsafe_allow_html=True)
     
     st.info(st.session_state.kapitel_info[i])
     st.session_state.kapitel_prompt[i] = st.text_area(f"Prompt zum generieren des Inhalts", value=st.session_state.kapitel_prompt[i], height=100)
