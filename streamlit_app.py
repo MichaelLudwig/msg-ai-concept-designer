@@ -219,7 +219,7 @@ for i, item in enumerate(st.session_state.toc_list):
     
     # Erstelle die Überschrift mit dem "Zurück zum Inhaltsverzeichnis" Icon
     st.markdown(f"""
-    <h2 style="display: flex; justify-content: space-between; ">
+    <h2 style="display: flex; justify-content: space-between; align-items: left;">
         {title_text}
         <a href="#inhaltsverzeichnis" style="text-decoration: none; color: inherit; font-size: 0.8em;">
             &#128196; 
