@@ -248,8 +248,11 @@ if 'glossar' in st.session_state:
 
         Sobald das Glossar generiert wurde, wird es hier angezeigt.
         """)
+
     else:
         st.write(st.session_state.glossar)
+    
+        
 
 #if "toc_list" in st.session_state:
     #st.write(st.session_state.toc_list)
