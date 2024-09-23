@@ -12,7 +12,7 @@ client = openai.AzureOpenAI(
     azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
     )
 openAI_model = "gpt-4o-mini-sw"
-st.print(st.secrets["OPENAI_API_KEY"])
+st.header(st.secrets["OPENAI_API_KEY"])
 
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
 
