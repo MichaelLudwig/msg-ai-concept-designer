@@ -6,6 +6,9 @@ import json
 import re
 import unicodedata
 
+apikey = st.secrets["OPENAI_API_KEY"]
+st.write(apikey)
+
 # Funktion zum Initialisieren der session_state Variablen
 def initialize_session_state():
     if 'new_title' not in st.session_state:
