@@ -90,7 +90,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
     )
     chapter_content = response.choices[0].message.content
     st.session_state.kapitel_inhalt[index] = chapter_content
-    st.write("Verwendete AI Tokens zur Erstellung dieses Kapitels: " + response.usage.total_tokens)
+    st.write("Verwendete AI Tokens zur Erstellung dieses Kapitels: " + str(response.usage.total_tokens))
     return chapter_content
 
 def generate_glossar(content):
@@ -105,5 +105,5 @@ def generate_glossar(content):
     )
 
     glossar = response.choices[0].message.content     
-    st.write("Verwendete AI Tokens zur Erstellung des Glossars: " + response.usage.total_tokens)
+    st.write("Verwendete AI Tokens zur Erstellung des Glossars: " + str(response.usage.total_tokens))
     return glossar
