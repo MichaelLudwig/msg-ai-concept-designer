@@ -1,12 +1,20 @@
 import streamlit as st
-from openai import OpenAI
+#from openai import OpenAI
+import openai
 import json
 
-OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
-openAI_model = "gpt-4o-mini"
+#OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
+#openAI_model = "gpt-4o-mini"
+
+client = openai.AzureOpenAI(
+    api_key="1d304241086e4f81adf346216e983c59",
+    api_version="2023-03-15-preview",
+    azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
+    )
+openAI_model = "gpt-4o-mini-sw"
 
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
-    client = OpenAI()
+
     response = client.chat.completions.create(
         model=openAI_model,
         messages=[
@@ -65,7 +73,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
     return toc_list
 
 def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, index):
-    client = OpenAI()
+
     response = client.chat.completions.create(
         model = openAI_model,
         messages=[
@@ -85,7 +93,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
     return chapter_content
 
 def generate_glossar(content):
-    client = OpenAI()
+
     response = client.chat.completions.create(
         model = openAI_model,
         messages=[
