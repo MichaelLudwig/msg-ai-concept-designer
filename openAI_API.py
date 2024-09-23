@@ -69,7 +69,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
 
     #toc_list.input_tokens = response['usage']['prompt_tokens']
     #toc_list.output_tokens = response['usage']['completion_tokens']
-    st.write(response.usage)
+    st.write("Verwendete AI Tokens zur Erstellung des Inhaltsverzeichnisses: " + response.usage.total_tokens)
 
     return toc_list
 
@@ -90,7 +90,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
     )
     chapter_content = response.choices[0].message.content
     st.session_state.kapitel_inhalt[index] = chapter_content
-    st.write(response.usage)
+    st.write("Verwendete AI Tokens zur Erstellung dieses Kapitels: " + response.usage.total_tokens)
     return chapter_content
 
 def generate_glossar(content):
@@ -105,5 +105,5 @@ def generate_glossar(content):
     )
 
     glossar = response.choices[0].message.content     
-    st.write("Verwendete AI Tokens zur Erstellung des Inhlatsverzeichnisses: " + response.usage.total_tokens)
+    st.write("Verwendete AI Tokens zur Erstellung des Glossars: " + response.usage.total_tokens)
     return glossar
