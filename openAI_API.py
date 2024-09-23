@@ -7,7 +7,6 @@ import json
 #openAI_model = "gpt-4o-mini"
 
 apikey = st.secrets["OPENAI_API_KEY"]
-st.write(apikey)
 
 client = openai.AzureOpenAI(
     api_key=apikey,
