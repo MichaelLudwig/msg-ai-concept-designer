@@ -6,10 +6,8 @@ import json
 #OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
 #openAI_model = "gpt-4o-mini"
 
-apikey = st.secrets["OPENAI_API_KEY"]
-
 client = openai.AzureOpenAI(
-    api_key=apikey,
+    api_key=st.secrets["OPENAI_API_KEY"],
     api_version="2023-03-15-preview",
     azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
     )
