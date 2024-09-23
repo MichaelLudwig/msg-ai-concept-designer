@@ -105,5 +105,5 @@ def generate_glossar(content):
     )
 
     glossar = response.choices[0].message.content     
-    st.write(response.usage)
+    st.write("Verwendete AI Tokens zur Erstellung des Inhlatsverzeichnisses: " + response.usage.total_tokens)
     return glossar
