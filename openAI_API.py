@@ -4,8 +4,6 @@ import openai
 import os
 import json
 
-#OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
-#openAI_model = "gpt-4o-mini"
 #hole dir den ai_key entweder aus der OS Umgebungsvariable oder dem Streamlit Secret Vault
 
 if "AZURE_OPENAI_API_KEY" in os.environ:
