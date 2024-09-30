@@ -44,7 +44,7 @@ initialize_session_state()
 
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
-st.subheader("Azure OpenAI API (Region Europa)")
+st.write("Azure OpenAI (Region Europa)")
 #main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
 
 
