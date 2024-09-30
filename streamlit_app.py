@@ -10,6 +10,8 @@ import unicodedata
 def initialize_session_state():
     if 'new_title' not in st.session_state:
         st.session_state.new_title = ""
+    if 'ai_api_info' not in st.session_state:
+        st.session_state.ai_api_info = ""
     if 'new_header' not in st.session_state:
         st.session_state.new_header = ""
     if 'new_content_focus' not in st.session_state:
@@ -44,7 +46,7 @@ initialize_session_state()
 
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
-st.write("Azure OpenAI (Region Europa)")
+st.write(st.session_state.ai_api_info)
 #main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
 
 

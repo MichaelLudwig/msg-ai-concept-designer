@@ -13,9 +13,11 @@ if "AZURE_OPENAI_API_KEY" in os.environ:
         azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
     )
     openAI_model = "gpt-4o-mini-sw"
+    st.session_state.ai_api_info="Azure OpenAI - Region Europa"
 elif "OPENAI_API_KEY" in st.secrets:
     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
     openAI_model = "gpt-4o-mini"
+    st.session_state.ai_api_info="powered by OpenAI"
 else:
     raise ValueError("Kein gültiger API-Schlüssel gefunden.")
     
