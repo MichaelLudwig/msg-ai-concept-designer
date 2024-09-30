@@ -2,6 +2,7 @@ import streamlit as st
 import openAI_API
 import word_export
 import io
+import os
 import json
 import re
 import unicodedata
@@ -46,6 +47,14 @@ initialize_session_state()
 
 st.set_page_config(layout="wide")
 main_heading=st.title("AI Concept Designer")
+
+if "AZURE_OPENAI_API_KEY" in os.environ:
+    st.session_state.ai_api_info="Azure OpenAI - Region Europa"
+elif "OPENAI_API_KEY" in st.secrets:
+    st.session_state.ai_api_info="powered by OpenAI"
+else:
+    st.session_state.ai_api_info="OpenAI"
+
 st.write(st.session_state.ai_api_info)
 #main_heading=st.title("Modulare Interaktive Konzept Erstellung (MIKE)")
 
