@@ -1,5 +1,5 @@
 import streamlit as st
-#from openai import OpenAI
+from openai import OpenAI
 import openai
 import os
 import json
@@ -7,21 +7,22 @@ import json
 #OpenAI.api_key = st.secrets["OPENAI_API_KEY"]
 #openAI_model = "gpt-4o-mini"
 #hole dir den ai_key entweder aus der OS Umgebungsvariable oder dem Streamlit Secret Vault
-if "AZURE_OPENAI_API_KEY" in os.environ:
-    ai_key = os.getenv("AZURE_OPENAI_API_KEY")
-else:
-    try:
-        ai_key = st.secrets["OPENAI_API_KEY"]
-    except KeyError:
-        # Wenn weder die Umgebungsvariable noch der Secret gesetzt ist
-        ai_key = ""
 
-client = openai.AzureOpenAI(
-    api_key=ai_key,
-    api_version="2023-03-15-preview",
-    azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
+if "AZURE_OPENAI_API_KEY" in os.environ:
+    client = openai.AzureOpenAI(
+        api_key=os.environ["AZURE_OPENAI_API_KEY"],
+        api_version="2023-03-15-preview",
+        azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
     )
-openAI_model = "gpt-4o-mini-sw"
+    openAI_model = "gpt-4o-mini-sw"
+elif "OPENAI_API_KEY" in st.secrets:
+    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+    openAI_model = "gpt-4o-mini"
+else:
+    raise ValueError("Kein gültiger API-Schlüssel gefunden.")
+    
+
+
 #st.header(st.secrets["OPENAI_API_KEY"])
 
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
