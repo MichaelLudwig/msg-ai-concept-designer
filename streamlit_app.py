@@ -45,7 +45,8 @@ def initialize_session_state():
 # Initialisiere session_state
 initialize_session_state()
 
-st.set_page_config(layout="wide")
+
+st.set_page_config(page_title="AI Concept Designer", page_icon=":mechanical_arm:", layout="wide")
 main_heading=st.title("AI Concept Designer")
 
 if "AZURE_OPENAI_API_KEY" in os.environ:
