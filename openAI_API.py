@@ -7,17 +7,17 @@ import json
 #hole dir den ai_key entweder aus der OS Umgebungsvariable oder dem Streamlit Secret Vault
 
 #Azure OpenAI Connection
-#if "AZURE_OPENAI_API_KEY" in os.environ:
-#    client = openai.AzureOpenAI(
-#        api_key=os.environ["AZURE_OPENAI_API_KEY"],
-#        api_version="2023-03-15-preview",
-#        azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
-#   )
-#    openAI_model = "gpt-4o-mini-sw"
-    #st.session_state.ai_api_info="Azure OpenAI - Region Europa"
 if "AZURE_OPENAI_API_KEY" in os.environ:
-    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"])
-    openAI_model = "gpt-4o-mini"
+    client = openai.AzureOpenAI(
+        api_key=os.environ["AZURE_OPENAI_API_KEY"],
+        api_version="2023-03-15-preview",
+        azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
+    )
+    openAI_model = "gpt-4o-mini-sw"
+    #st.session_state.ai_api_info="Azure OpenAI - Region Europa"
+#if "AZURE_OPENAI_API_KEY" in os.environ:
+#    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"])
+#    openAI_model = "gpt-4o-mini"
     #st.session_state.ai_api_info="Azure OpenAI - Region Europa"    
 elif "OPENAI_API_KEY" in st.secrets:
     client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
