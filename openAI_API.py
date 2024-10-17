@@ -4,8 +4,11 @@ import openai
 import os
 import json
 
-#hole dir den ai_key entweder aus der OS Umgebungsvariable oder dem Streamlit Secret Vault
+# Set a default model
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = ""
 
+#hole dir den ai_key entweder aus der OS Umgebungsvariable oder dem Streamlit Secret Vault
 #Azure OpenAI Connection
 def get_oai_client():
     if "AZURE_OPENAI_API_KEY" in os.environ:
@@ -14,7 +17,7 @@ def get_oai_client():
             api_version="2023-03-15-preview",
             azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
         )
-        openAI_model = "gpt-4o-mini-sw"
+        st.session_state["openai_model"] = "gpt-4o-mini-sw"
         #st.session_state.ai_api_info="Azure OpenAI - Region Europa"
     #if "AZURE_OPENAI_API_KEY" in os.environ:
     #    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"])
@@ -22,7 +25,7 @@ def get_oai_client():
         #st.session_state.ai_api_info="Azure OpenAI - Region Europa"    
     elif "OPENAI_API_KEY" in st.secrets:
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
-        openAI_model = "gpt-4o-mini"
+        st.session_state["openai_model"] = "gpt-4o-mini"
         #st.session_state.ai_api_info="powered by OpenAI"
     else:
         raise ValueError("Kein gültiger API-Schlüssel gefunden.")
@@ -38,7 +41,7 @@ client = get_oai_client()
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
 
     response = client.chat.completions.create(
-        model=openAI_model,
+        model=st.session_state["openai_model"],
         messages=[
             {"role": "system", "content": "Du bist ein Assistent, der Inhaltsverzeichnisse mit einer kurzen Beschreibung pro Kapitel für bestimmte Themengebiete erstellt"},
             {"role":"user" , "content": "Erstelle ein durchnummeriertes Inhaltsverzeichnis für ein " + new_doctype + " zum Thema " + new_title + " mit etwa " + str(new_chapter_count) + " Kapiteln."},
@@ -97,7 +100,7 @@ def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
 def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writing_style, new_word_count, new_context, new_stakeholder, index):
 
     response = client.chat.completions.create(
-        model = openAI_model,
+        model = st.session_state["openai_model"],
         messages=[
             {"role":"user" , "content": "Du schreibst mehrere Kapitel eines " + new_doctype + " zum Thema " + new_title },
             {"role":"user" , "content": "Schreibe den Inhalt für das Kapitel" + title_text},
@@ -117,7 +120,7 @@ def generate_chapter(title_text, prompt_text, new_doctype, new_title, new_writin
 def generate_glossar(content):
 
     response = client.chat.completions.create(
-        model = openAI_model,
+        model = st.session_state["openai_model"],
         messages=[
             {"role":"user" , "content": "Du hast ein Konzeptdokument mit folgenden Kapitelinhalten erzeugt" + str(content)},
             {"role":"user" , "content": "Erstelle ein ausführliches alphabetisch sortiertes Glossar. Gehe auf Abkürzungen und nicht allgemein bekannte technische Begriffe ein."},
