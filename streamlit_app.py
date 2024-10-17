@@ -41,6 +41,8 @@ def initialize_session_state():
         st.session_state.kapitel_prompt = []
     if 'glossar' not in st.session_state:
         st.session_state.glossar = ""
+    if "openai_model" not in st.session_state:
+        st.session_state["openai_model"] = ""
 
 # Initialisiere session_state
 initialize_session_state()
