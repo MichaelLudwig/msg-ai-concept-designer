@@ -2,7 +2,7 @@ import streamlit as st
 import openAI_API
 
 client = openAI_API.get_oai_client()
-openAI_model = "gpt-4o-mini"
+
 
 # initialize chat session in streamlit if not already present
 if "chat_history" not in st.session_state:
@@ -28,7 +28,7 @@ if user_prompt:
 
     # send user's message to GPT-4o and get a response
     response = client.chat.completions.create(
-        model=openAI_model,
+        model=st.session_state["openai_model"],
         messages=[
             {"role": "system", "content": "Du bist ein hilfreicher Assistent"},
             *st.session_state.chat_history
