@@ -11,7 +11,7 @@ if "ai_api_info" not in st.session_state:
     st.session_state.ai_api_info = "OpenAI"
 
 # streamlit page title
-st.title("🤖 Azure OpenAI GPT-4o-mini ChatBot")
+st.title("🤖 Chat Bot")
 st.text(st.session_state.ai_api_info)
 
 # display chat history
