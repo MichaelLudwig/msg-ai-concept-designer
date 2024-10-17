@@ -7,6 +7,8 @@ client = openAI_API.get_oai_client()
 # initialize chat session in streamlit if not already present
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
+if "ai_api_info" not in st.session_state:
+    st.session_state.ai_api_info = "OpenAI"
 
 # streamlit page title
 st.title("🤖 Azure OpenAI GPT-4o-mini ChatBot")
