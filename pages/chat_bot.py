@@ -32,6 +32,17 @@ if user_prompt:
     with st.chat_message("user"):
         st.markdown(user_prompt)
 
+    # Display assistant response in chat message container
+    #Version ohne stream, also die Antwort wird komplett ausgegeben ------------------------------
+    # send user's message to GPT-4o and get a response
+    #response = client.chat.completions.create(
+    #    model=st.session_state["openai_model"],
+    #    messages=[
+    #        {"role": "system", "content": "Du bist ein hilfreicher Assistent"},
+    #        *st.session_state.chat_history
+    #    ]
+    #)
+    #assistant_response = response.choices[0].message.content
 
     #Version mit stream, die Antwort wird ausgegeben, als würde der Chatbot sie live schreiben
     with st.chat_message("assistant"):
@@ -46,3 +57,7 @@ if user_prompt:
         assistant_response = st.write_stream(stream)    
     st.session_state.chat_history.append({"role": "assistant", "content": assistant_response})
 
+    #Version ohne stream, also die Antwort wird komplett ausgegeben ------------------------------
+    # # display GPT-4o's response
+    #with st.chat_message("assistant"):
+    #    st.markdown(assistant_response)
