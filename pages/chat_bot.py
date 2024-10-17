@@ -9,6 +9,8 @@ if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 if "ai_api_info" not in st.session_state:
     st.session_state.ai_api_info = "OpenAI"
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = ""
 
 # streamlit page title
 st.title("🤖 Chat Bot")
