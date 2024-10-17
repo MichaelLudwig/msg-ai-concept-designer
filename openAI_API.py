@@ -39,7 +39,7 @@ client = get_oai_client()
 #st.header(st.secrets["OPENAI_API_KEY"])
 
 def generate_toc(new_doctype, new_title, new_content_focus, new_chapter_count):
-
+    client = get_oai_client()
     response = client.chat.completions.create(
         model=st.session_state["openai_model"],
         messages=[
