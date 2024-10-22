@@ -1,3 +1,4 @@
 streamlit
 openai
 python-docx
+azure-identity
