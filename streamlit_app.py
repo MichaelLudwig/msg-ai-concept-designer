@@ -47,6 +47,8 @@ def initialize_session_state():
 # Initialisiere session_state
 initialize_session_state()
 
+client = openAI_API.get_oai_client()
+
 
 st.set_page_config(page_title="AI Concept Designer", page_icon=":mechanical_arm:", layout="wide")
 main_heading=st.title("AI Concept Designer")
