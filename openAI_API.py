@@ -18,7 +18,6 @@ def get_oai_client():
             azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
         )
         st.session_state["openai_model"] = "gpt-4o-mini-sw"
-        st.write("haha")
         #st.session_state.ai_api_info="Azure OpenAI - Region Europa"
     #if "AZURE_OPENAI_API_KEY" in os.environ:
     #    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"])
@@ -32,12 +31,10 @@ def get_oai_client():
             azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
         )
         st.session_state["openai_model"] = "gpt-4o-mini-sw"
-        st.write("huhu")
         #st.session_state.ai_api_info="powered by OpenAI"
     elif "OPENAI_API_KEY" in st.secrets:
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         st.session_state["openai_model"] = "gpt-4o-mini"
-        st.write("hehe")
         #st.session_state.ai_api_info="powered by OpenAI"
     else:
         raise ValueError("Kein gültiger API-Schlüssel gefunden.")
