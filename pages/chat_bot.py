@@ -55,7 +55,20 @@ if user_prompt:
                 for m in st.session_state.chat_history
             ], 
             stream=True,
-            
+            extra_body={
+                "data_sources": [
+                    {
+                        "type": "azure_search",
+                        "parameters": {
+                            "endpoint": "https://azure-openai-search-services.search.windows.net",
+                            "index_name": "vector-msg-knowledge",
+                            "authentication": {
+                                "type": "system_assigned_managed_identity"
+                            }
+                        }
+                    }
+                ]
+            }
              
         )
         assistant_response = st.write_stream(stream)    
