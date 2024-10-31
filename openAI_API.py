@@ -14,7 +14,7 @@ def get_oai_client():
     if "AZURE_OPENAI_API_KEY" in os.environ:
         client = openai.AzureOpenAI(
             api_key=os.environ["AZURE_OPENAI_API_KEY"],
-            api_version="2023-03-15-preview",
+            api_version="2024-05-01-preview",
             azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
         )
         st.session_state["openai_model"] = "gpt-4o-mini-sw"
