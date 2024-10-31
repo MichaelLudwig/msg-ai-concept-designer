@@ -62,9 +62,7 @@ if user_prompt:
                         "parameters": {
                             "endpoint": "https://azure-openai-search-services.search.windows.net",
                             "index_name": "vector-msg-knowledge",
-                            "authentication": {
-                                "type": "system_assigned_managed_identity"
-                            }
+                            "key": st.secrets["SEARCH_API_KEY"]
                         }
                     }
                 ]
