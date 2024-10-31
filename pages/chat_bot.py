@@ -54,17 +54,18 @@ if user_prompt:
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.chat_history
             ], 
-            data_sources=[
-                {
-                    "type": "AzureCognitiveSearch",
-                    "parameters": {
-                        "endpoint": "https://azure-openai-search-services.search.windows.net",
-                        "index_name": "vector-msg-knowledge",
-                        "key": st.secrets["SEARCH_API_KEY"],
-                        "filter": ""
+            extra_body={
+                "dataSources": [
+                    {
+                        "type": "AzureCognitiveSearch",
+                        "parameters": {
+                            "endpoint": "https://azure-openai-search-services.search.windows.net",
+                            "key": st.secrets["SEARCH_API_KEY"],
+                            "indexName": "vector-msg-knowledge",
+                        }
                     }
-                }
-            ],
+                ]
+            },
             stream=True,
              
         )
