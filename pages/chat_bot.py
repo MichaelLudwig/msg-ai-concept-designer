@@ -53,7 +53,8 @@ if user_prompt:
             messages=[
                 {"role": m["role"], "content": m["content"]}
                 for m in st.session_state.chat_history
-            ], 
+            ],
+            
             stream=True,
              
         )
