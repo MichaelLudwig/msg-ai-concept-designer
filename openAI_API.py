@@ -31,6 +31,7 @@ def get_oai_client():
             azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
         )
         st.session_state["openai_model"] = "gpt-4o-mini-sw"
+        st.write("gpt-4o-mini-sw")
         #st.session_state.ai_api_info="powered by OpenAI"
     elif "OPENAI_API_KEY" in st.secrets:
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
