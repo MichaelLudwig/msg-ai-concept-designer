@@ -23,6 +23,14 @@ def get_oai_client():
     #    client = OpenAI(api_key=os.environ["AZURE_OPENAI_API_KEY"])
     #    openAI_model = "gpt-4o-mini"
         #st.session_state.ai_api_info="Azure OpenAI - Region Europa"    
+    elif "AZURE_OPENAI_API_KEY" in st.secrets:
+        client = openai.AzureOpenAI(
+            api_key=st.secrets["AZURE_OPENAI_API_KEY"],
+            api_version="2023-03-15-preview",
+            azure_endpoint="https://mlu-azure-openai-service-sw.openai.azure.com/"
+        )
+        st.session_state["openai_model"] = "gpt-4o-mini-sw"
+        #st.session_state.ai_api_info="powered by OpenAI"
     elif "OPENAI_API_KEY" in st.secrets:
         client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
         st.session_state["openai_model"] = "gpt-4o-mini"
