@@ -55,34 +55,7 @@ if user_prompt:
                 for m in st.session_state.chat_history
             ], 
             stream=True,
-            extra_body={
-                "data_sources": [{
-                "type": "azure_search",
-                "parameters": {
-                    "filter": None,
-                    "endpoint": "https://azure-openai-search-services.search.windows.net",
-                    "index_name": "vector-msg-knowledge",
-                    "semantic_configuration": "vector-msg-knowledge-semantic-configuration",
-                    "authentication": {
-                    "type": "api_key",
-                    "key": st.secrets["SEARCH_API_KEY"]
-                    },
-                    "embedding_dependency": {
-                    "type": "endpoint",
-                    "endpoint": "https://mlu-azure-openai-service-sw.openai.azure.com/openai/deployments/text-embedding-ada-002/embeddings?api-version=2023-03-15-preview",
-                    "authentication": {
-                        "type": "api_key",
-                        "key": st.secrets["OPENAI_API_KEY"]
-                    }
-                    },
-                    "query_type": "vector_simple_hybrid",
-                    "in_scope": True,
-                    "role_information": "Sie sind KI-Assistent und helfen Personen, Informationen zu finden.",
-                    "strictness": 3,
-                    "top_n_documents": 5
-                }
-                }]
-            }
+            
              
         )
         assistant_response = st.write_stream(stream)    
