@@ -61,7 +61,7 @@ if user_prompt:
                         "type": "azure_search",
                         "parameters": {
                             "endpoint": "https://azure-openai-search-services.search.windows.net",
-                            "index_name": "mlu-knowledge-vector",
+                            "index_name": "mlu-knowledge-vektor",
                             #"index_name": "vector-msg-knowledge",
                             "authentication": {
                                 "type": "api_key",
