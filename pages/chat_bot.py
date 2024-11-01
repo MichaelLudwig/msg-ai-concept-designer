@@ -57,7 +57,6 @@ if user_prompt:
                             "key": st.secrets["SEARCH_API_KEY"]
                         },
                         "query_type": "vector_semantic_hybrid",  # Aktiviert die Hybrid-Suche
-                        "semantic_ranker": True,  # Aktiviert semantisches Ranking
                         "top_n": 5,  # Anzahl der zurückgegebenen Dokumente
                     }
                 }
