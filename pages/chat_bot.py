@@ -101,3 +101,4 @@ if user_prompt:
     # # display GPT-4o's response
     with st.chat_message("assistant"):
         st.markdown(assistant_response)
+        st.text("Prompt Token: " + str(response.usage.prompt_tokens) + " Response Token: " + str(response.usage.completion_tokens))
