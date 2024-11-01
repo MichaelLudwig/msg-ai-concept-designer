@@ -64,7 +64,7 @@ if user_prompt:
         }
     )
     assistant_response = response.choices[0].message.content
-    st.text(st.session_state.token_info) = "Prompt Token: " + response.usage.prompt_tokens + " Response Token: " +response.usage.completion_tokens
+    st.session_state.token_info = "Prompt Token: " + response.usage.prompt_tokens + " Response Token: " +response.usage.completion_tokens
 
     #Version mit stream, die Antwort wird ausgegeben, als würde der Chatbot sie live schreiben
     #with st.chat_message("assistant"):
