@@ -99,5 +99,5 @@ if user_prompt:
 
     #Version ohne stream, also die Antwort wird komplett ausgegeben ------------------------------
     # # display GPT-4o's response
-    #with st.chat_message("assistant"):
-    #    st.markdown(assistant_response)
+    with st.chat_message("assistant"):
+        st.markdown(assistant_response)
