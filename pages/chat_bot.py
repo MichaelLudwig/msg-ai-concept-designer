@@ -11,13 +11,11 @@ if "ai_api_info" not in st.session_state:
     st.session_state.ai_api_info = "OpenAI"
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = ""
-if "token_info" not in st.session_state:
-    st.session_state["token_info"] = ""
 
 # streamlit page title
 st.title("🤖 Chat Bot")
 st.text(st.session_state.ai_api_info)
-st.text(st.session_state.token_info)
+
 
 # display chat history
 for message in st.session_state.chat_history:
@@ -64,8 +62,7 @@ if user_prompt:
         }
     )
     assistant_response = response.choices[0].message.content
-    st.session_state.token_info = "Prompt Token: " + str(response.usage.prompt_tokens) + " Response Token: " + str(response.usage.completion_tokens)
-
+    
     #Version mit stream, die Antwort wird ausgegeben, als würde der Chatbot sie live schreiben
     #with st.chat_message("assistant"):
     #    stream = client.chat.completions.create(
