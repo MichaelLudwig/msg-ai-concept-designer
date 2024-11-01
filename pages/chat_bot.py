@@ -11,10 +11,13 @@ if "ai_api_info" not in st.session_state:
     st.session_state.ai_api_info = "OpenAI"
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = ""
+if "token_info" not in st.session_state:
+    st.session_state["token_info"] = ""
 
 # streamlit page title
 st.title("🤖 Chat Bot")
 st.text(st.session_state.ai_api_info)
+st.text(st.session_state.token_info)
 
 # display chat history
 for message in st.session_state.chat_history:
@@ -37,43 +40,61 @@ if user_prompt:
     # Display assistant response in chat message container
     #Version ohne stream, also die Antwort wird komplett ausgegeben ------------------------------
     # send user's message to GPT-4o and get a response
-    #response = client.chat.completions.create(
-    #    model=st.session_state["openai_model"],
-    #    messages=[
-    #        {"role": "system", "content": "Du bist ein hilfreicher Assistent"},
-    #        *st.session_state.chat_history
-    #    ]
-    #)
-    #assistant_response = response.choices[0].message.content
-
-    #Version mit stream, die Antwort wird ausgegeben, als würde der Chatbot sie live schreiben
-    with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.chat_history
-            ], 
-            stream=True,
-            extra_body={
-                "data_sources": [
-                    {
-                        "type": "azure_search",
-                        "parameters": {
-                            "endpoint": "https://azure-openai-search-services.search.windows.net",
-                            "index_name": "mlu-knowledge-vektor",
-                            #"index_name": "vector-msg-knowledge",
-                            "authentication": {
-                                "type": "api_key",
-                                "key": st.secrets["SEARCH_API_KEY"]
-                            }
+    response = client.chat.completions.create(
+        model=st.session_state["openai_model"],
+        messages=[
+            {"role": "system", "content": "Du bist ein hilfreicher Assistent"},
+            *st.session_state.chat_history
+        ],
+        extra_body={
+            "data_sources": [
+                {
+                    "type": "azure_search",
+                    "parameters": {
+                        "endpoint": "https://azure-openai-search-services.search.windows.net",
+                        "index_name": "mlu-knowledge-vektor",
+                        #"index_name": "vector-msg-knowledge",
+                        "authentication": {
+                            "type": "api_key",
+                            "key": st.secrets["SEARCH_API_KEY"]
                         }
                     }
-                ]
-            }
-             
-        )
-        assistant_response = st.write_stream(stream)    
+                }
+            ]
+        }
+    )
+    assistant_response = response.choices[0].message.content
+    st.text(st.session_state.token_info) = "Prompt Token: " + response.usage.prompt_tokens + " Response Token: " +response.usage.completion_tokens
+
+    #Version mit stream, die Antwort wird ausgegeben, als würde der Chatbot sie live schreiben
+    #with st.chat_message("assistant"):
+    #    stream = client.chat.completions.create(
+    #        model=st.session_state["openai_model"],
+    #        messages=[
+    #            {"role": m["role"], "content": m["content"]}
+    #            for m in st.session_state.chat_history
+    #        ], 
+    #        stream=True,
+    #        extra_body={
+    #            "data_sources": [
+    #                {
+    #                    "type": "azure_search",
+    #                    "parameters": {
+    #                        "endpoint": "https://azure-openai-search-services.search.windows.net",
+    #                        "index_name": "mlu-knowledge-vektor",
+    #                        #"index_name": "vector-msg-knowledge",
+    #                        "authentication": {
+    #                            "type": "api_key",
+    #                            "key": st.secrets["SEARCH_API_KEY"]
+    #                        }
+    #                    }
+    #                }
+    #            ]
+    #        }
+    #         
+    #    )
+    #    assistant_response = st.write_stream(stream)    
+
     st.session_state.chat_history.append({"role": "assistant", "content": assistant_response})
 
     #Version ohne stream, also die Antwort wird komplett ausgegeben ------------------------------
