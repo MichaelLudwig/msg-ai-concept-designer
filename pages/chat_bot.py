@@ -55,8 +55,8 @@ if user_prompt:
                         "authentication": {
                             "type": "api_key",
                             "key": st.secrets["SEARCH_API_KEY"]
-                        },
-                        "query_type": "vector_semantic_hybrid",  # Aktiviert die Hybrid-Suche
+                        }
+                        #"query_type": "vector_semantic_hybrid",  # Aktiviert die Hybrid-Suche
                         #"top_n": 5,  # Anzahl der zurückgegebenen Dokumente
                     }
                 }
