@@ -43,25 +43,26 @@ if user_prompt:
         messages=[
             {"role": "system", "content": "Du bist ein hilfreicher Assistent"},
             *st.session_state.chat_history
-        ],
-        extra_body={
-            "data_sources": [
-                {
-                    "type": "azure_search",
-                    "parameters": {
-                        "endpoint": "https://azure-openai-search-services.search.windows.net",
-                        "index_name": "mlu-knowledge-vektor",
-                        #"index_name": "vector-msg-knowledge",
-                        "authentication": {
-                            "type": "api_key",
-                            "key": st.secrets["SEARCH_API_KEY"]
-                        }
+        ]
+        #,
+        #extra_body={
+        #    "data_sources": [
+        #        {
+        #            "type": "azure_search",
+        #            "parameters": {
+        #                "endpoint": "https://azure-openai-search-services.search.windows.net",
+        #                "index_name": "mlu-knowledge-vektor",
+        #                #"index_name": "vector-msg-knowledge",
+        #                "authentication": {
+        #                    "type": "api_key",
+        #                    "key": st.secrets["SEARCH_API_KEY"]
+        #                }
                         #"query_type": "vector_semantic_hybrid",  # Aktiviert die Hybrid-Suche
                         #"top_n": 5,  # Anzahl der zurückgegebenen Dokumente
-                    }
-                }
-            ]
-        }
+        #            }
+        #        }
+        #    ]
+        #}
     )
     assistant_response = response.choices[0].message.content
     
