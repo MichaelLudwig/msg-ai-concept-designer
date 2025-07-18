@@ -3,6 +3,10 @@ from openai import OpenAI
 import openai
 import os
 import json
+from dotenv import load_dotenv
+
+# Lade .env Datei
+load_dotenv()
 
 # Set a default model
 if "openai_model" not in st.session_state:
